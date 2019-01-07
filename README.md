@@ -1,5 +1,4 @@
-# dplyr and tidyr workshop
-
+#Introduction to the tidyverse
 Este repositorio contiene el codigo, ejemplos y ejercicios utilizados durante el seminario de dplyr y tidyr que tuvo lugar en Solsona, el 24 de enero de 2017. El texto para seguir el workshop se puede encontrar [aquí](R/workshop_exercices.html), y se puede descargar también como un [pdf](R/workshop_exercices.pdf)
 
 ## Contenido
@@ -21,8 +20,8 @@ Los datos necesarios para seguir el seminario (disponibles [aquí](https://github
 Si utilizas o modificas el material contenido en este repositorio, cítalo adecuadamente como:
 
 ```
-Aitor Ameztegui (2017) dplyr and tidyr workshop: Data science with the tidyverse. 
-GitHub repository, https://github.com/ameztegui/dplyr_workshop
+Ameztegui, A; Granda, V. (2019) Introduction to the tidyverse: dplyr, tidyr and purrr . 
+GitHub repository, https://github.com/ameztegui/tidyverse_workshop
 ```
 Puedes encontrar más detalles en el archivo [CITATION.txt](CITATION.txt)
 Para cualquier uso que trascienda dicha licencia o cualquier aclaración, contactar con Aitor Ameztegui (ameztegui@gmail.com).
