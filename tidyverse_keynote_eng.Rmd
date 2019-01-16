@@ -75,6 +75,9 @@ class: middle, left
      species and size class
   
   4. `coordinates [11858 x 6]`: X and Y UTM coordinates of each plot.
+  
+  5. `leaf [10447 x 3]`: leaf biomass and carbon content for those IFN 3 plots where they
+    where available
 
 ---
 
