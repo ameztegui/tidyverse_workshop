@@ -1,25 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>tidyr, dplyr and purr</title>
+    <title>An introduction to the tidyverse</title>
     <meta charset="utf-8">
     <meta name="author" content="Aitor Ameztegui &amp; Víctor Granda" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
-    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+    <link rel="stylesheet" href="custom-fonts.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
-class: center, middle, inverse, title-slide
 
-# tidyr, dplyr and purr
-## An introduction to the tidyverse
-### Aitor Ameztegui &amp; Víctor Granda
-### 2019/01/08 (updated: 2019-01-16)
+
+
+
+class: title-slide
+
+# An introduction to the tidyverse
+
+## tidyr, dplyr and purrr
+
+### Aitor Ameztegui (@multivac42)
+### Víctor Granda (@malditobarbudo)
+
+
+#### **I SIbEcol meeting** (Barcelona, 4 de Febrero de 2019)
+
 
 ---
+layout: true
 
+&lt;div class="tweaked-header" style="background-image: url(resources/images/tidyverse.png)"&gt;&lt;/div&gt;
 
-
+---
 
 # tidyr, dplyr &amp; purr: the tidyverse
 
@@ -40,24 +53,25 @@ to ease the data analysis in all its steps.
 ![](resources/images/tidyverse_schema.png)
 
 ---
-class: middle, left
 
 # Before we start...
 
-  - Neither `tidyr`, nor `dplyr` or `purrr` do anything that can't be done with
-    base R code, apply family functions, for-loops or other packages.  
-  
-  - Designed to be more eficient (in time), easier to read and easier to use
-    (it may requires some adaptation if used to base R code).  
-  
-  - Valid mostly for data.frames. For other formats (matrices, arrays) `plyr` can
-    be used.
+- Neither `tidyr`, nor `dplyr` or `purrr` do anything that can't be done with
+  base R code, apply family functions, for-loops or other packages.  
+
+- Designed to be more eficient (in time), easier to read and easier to use
+  (it may requires some adaptation if used to base R code).  
+
+- Valid mostly for data.frames. For other formats (matrices, arrays) `plyr` can
+  be used.
 
 ---
 
 # *tidyverse*: tidy data
 
+.center[
 ![](resources/images/tidy_data.png)
+]
 
 --
 
@@ -124,10 +138,16 @@ Tibbles, not usual data.frames:
   - inform about variable types
 
 ---
+layout: false
 class: inverse
+background-image: url(resources/images/dplyr.png)
 
 # dplyr
 
+---
+layout: true
+
+&lt;div class="tweaked-header" style="background-image: url(resources/images/dplyr.png)"&gt;&lt;/div&gt;
 ---
 
 # 5 main verbs of dplyr
@@ -257,6 +277,33 @@ Let's find those plots in IFN3n (`plots` data frame) that:
   
   1.3 It took **more** than 2 hours to measure (7200s)
 
+
+---
+
+# Selecting columns (`select`)
+
+
+```r
+trees
+```
+
+```
+## # A tibble: 111,756 x 12
+##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
+##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 0800… 08        A     1        022         7  8.3   31.8     20
+##  2 0800… 08        A     1        476        38  9.1   31.8     35
+##  3 0800… 08        A     1        021        25  7     31.8     25
+##  4 0800… 08        A     1        021        28  8.89  31.8     15
+##  5 0800… 08        A     1        021        19 11.2   14.1     35
+##  6 0800… 08        A     1        021        32 12     14.1     35
+##  7 0800… 08        A     1        243        40  7.8   31.8     15
+##  8 0800… 08        A     1        045        16  5.09  31.8     20
+##  9 0800… 08        A     1        243        47 26.9    5.09    65
+## 10 0800… 08        A     1        022        44  2.7  127.      15
+## # … with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
+## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;
+```
 
 ---
 
@@ -455,7 +502,7 @@ arrange(trees, desc(Dist))
 
 ---
 
-# Transforming and adding new variables (`mutate`)
+# Transforming variables (`mutate`)
 
 
 ```r
@@ -486,7 +533,7 @@ mutate(
 
 ---
 
-# Transforming and adding new variables (`mutate`)
+# Transforming variables (`mutate`)
 
 
 ```r
@@ -517,7 +564,7 @@ mutate(
 
 ---
 
-# Transforming and adding new variables (`mutate`)
+# Transforming variables (`mutate`)
 
 ## Exercise 4
 
@@ -594,13 +641,19 @@ summarise(
 Which statistics would you calculate to characterize diameter values in each plot?
 
 ---
+layout: true
+
+&lt;div class="tweaked-header" style="background-image: url(resources/images/pipe.png)"&gt;&lt;/div&gt;
+
+---
+class: code80
 
 # Data pipelines (`%&gt;%`)
 
-- Often, we want to use several verbs (filter, arrange, group_by, summarise...)
+  - Often, we want to use several verbs (filter, arrange, group_by, summarise...)
 
-- Multipleoperations are difficult to read, or require to create multiple intermediate
-  objects:
+  - Multiple operations are difficult to read, or require to create multiple intermediate
+    objects:
 
 .pull-left[
 
@@ -668,6 +721,7 @@ mutate(df, double = 2*value) ~ df %&gt;% mutate(double = 2*value)
 ```
 
 ---
+class: code80
 
 # Data pipelines (`%&gt;%`)
 
@@ -728,6 +782,10 @@ Create pipelines to answer the following questions:
   
   6.3 Is there any relationship between both variables?
 
+---
+layout: true
+
+&lt;div class="tweaked-header" style="background-image: url(resources/images/dplyr.png)"&gt;&lt;/div&gt;
 
 ---
 
@@ -801,15 +859,24 @@ Add X and Y coordinates that are included in the `coordinates` data frame to eac
 the `plots` data frame
 
 ---
+layout: false
 class: inverse
+background-image: url(resources/images/tidyr.png)
 
 # tidyr
+
+---
+layout: true
+
+&lt;div class="tweaked-header" style="background-image: url(resources/images/tidyr.png)"&gt;&lt;/div&gt;
 
 ---
 
 # tidy data
 
+.center[
 ![](resources/images/tidy_data.png)
+]
 
 --
 
@@ -872,7 +939,7 @@ Data is not always organized...
 
 ## The verbs of tidyr
 
-  - `gather`: Convert data from *wide* to *long* format (Columns to id-value pairs)
+  - `gather`: Convert data from *wide* to *long* format (columns to id-value pairs)
   - `spread`: Convert data from *long* to *wide* format (id-value pairs to columns)
   - `separate`: Convert one column in serveral
   - `unite`: Join several columns in one
@@ -881,7 +948,7 @@ Data is not always organized...
 
 # tidyr
 
-# common structure (for most of the tidyverse)
+## common structure (for most of the tidyverse)
 
 ```r
 verb(data, ...)
@@ -1042,9 +1109,16 @@ n_parcelas_sep %&gt;%
 Use `unite` and `spread` to transform the data from exercise 9 into its original format
 
 ---
+layout: false
 class: inverse
+background-image: url(resources/images/purrr.png)
 
 # purrr
+
+---
+layout: true
+
+&lt;div class="tweaked-header" style="background-image: url(resources/images/purrr.png)"&gt;&lt;/div&gt;
 
 ---
 
@@ -1078,7 +1152,7 @@ Can be used as alternatives to `apply` family functions (`lapply`, `vapply`...)
 
 # purrr
 
-# common structure
+## common structure
 
 ```r
 verb(.x, .f, ...)
@@ -1160,6 +1234,7 @@ trees %&gt;%
 ```
 
 ---
+class: code50
 
 # walk
 
@@ -1213,28 +1288,6 @@ In this exercise we will use some of the knowledge acquired in this workshop
     and tree height (in the `trees` dataset), for each province at the plot level. For that
     you will need to summarise tree values, join with the leaf data, split by provinces and
     perform the model for each province.
-
-
-```r
-leaf
-```
-
-```
-## # A tibble: 10,447 x 3
-##    Codi   leaf_biomass leaf_carbon
-##    &lt;chr&gt;         &lt;dbl&gt;       &lt;dbl&gt;
-##  1 080001        4.99        2.58 
-##  2 080002        2.39        1.23 
-##  3 080003        2.97        1.53 
-##  4 080004        0.395       0.200
-##  5 080005        1.34        0.644
-##  6 080006        4.03        2.07 
-##  7 080007        5.97        3.04 
-##  8 080008        0.928       0.452
-##  9 080009        3.85        1.94 
-## 10 080010        1.54        0.758
-## # … with 10,437 more rows
-```
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
