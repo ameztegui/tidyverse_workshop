@@ -264,3 +264,20 @@ div.tweaked-header {
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+/* final slide */
+.thanks {
+  background-color: #23373B;
+  color: #fff;
+  padding-left: 100px;
+  text-shadow: 0 0 20px #333;
+  text-align: center;
+}
+
+.thanks h1 {
+  color: #FAFAFA;
+}
+
+.thanks h2 {
+  color: #FAFAFA;
+}

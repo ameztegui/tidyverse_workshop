@@ -9,7 +9,8 @@ output:
     css: [default, "custom.css", "custom-fonts.css"]
     seal: false
     nature:
-      highlightStyle: github
+      highlightStyle: tomorrow-night-eighties
+      highlightLanguage: r
       highlightLines: true
       countIncrementalSlides: false
 ---
@@ -450,20 +451,14 @@ final_data <- filter(
   
   - The result of the left side is passed to the function in the right as first argument:
   
-```r
-f(x, y) ~ x %>% f(y)
-
-f(x, y, z) ~ x %>% f(y, z)
-```
+  `f(x, y)` is the same as `x %>% f(y)`  
+  `f(x, y, z)` is the same as `x %>% f(y, z)`
 
   - In the tidyverse `%>%` makes each function to be applied to the data frame resulting
     from the previous step
-
-```r
-filter(df, color == 'blue') ~ df %>% filter(color == 'blue')
-
-mutate(df, double = 2*value) ~ df %>% mutate(double = 2*value)
-```
+  
+  `filter(df, color == 'blue')` is the same as `df %>% filter(color == 'blue')`  
+  `mutate(df, double = 2*value)` is the same as `df %>% mutate(double = 2*value)`
 
 ---
 class: code80
@@ -891,3 +886,21 @@ In this exercise we will use some of the knowledge acquired in this workshop
     you will need to summarise tree values, join with the leaf data, split by provinces and
     perform the model for each province.
 
+---
+layout: false
+class: thanks clear middle
+
+.font160[Thank you!]
+
+<br>
+
+`r icon::fa("twitter")` @multivac42  
+`r icon::fa("github")` https://github.com/ameztegui/  
+
+`r icon::fa("twitter")` @malditobarbudo  
+`r icon::fa("github")` https://github.com/malditobarbudo/  
+
+<br>
+
+Presentation repository:  
+`r icon::fa("github")` https://github.com/ameztegui/tidyverse_workshop

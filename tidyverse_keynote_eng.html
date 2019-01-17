@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="author" content="Aitor Ameztegui &amp; Víctor Granda" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="custom.css" type="text/css" />
     <link rel="stylesheet" href="custom-fonts.css" type="text/css" />
   </head>
@@ -705,20 +706,14 @@ final_data &lt;- filter(
   
   - The result of the left side is passed to the function in the right as first argument:
   
-```r
-f(x, y) ~ x %&gt;% f(y)
-
-f(x, y, z) ~ x %&gt;% f(y, z)
-```
+  `f(x, y)` is the same as `x %&gt;% f(y)`  
+  `f(x, y, z)` is the same as `x %&gt;% f(y, z)`
 
   - In the tidyverse `%&gt;%` makes each function to be applied to the data frame resulting
     from the previous step
-
-```r
-filter(df, color == 'blue') ~ df %&gt;% filter(color == 'blue')
-
-mutate(df, double = 2*value) ~ df %&gt;% mutate(double = 2*value)
-```
+  
+  `filter(df, color == 'blue')` is the same as `df %&gt;% filter(color == 'blue')`  
+  `mutate(df, double = 2*value)` is the same as `df %&gt;% mutate(double = 2*value)`
 
 ---
 class: code80
@@ -1288,10 +1283,30 @@ In this exercise we will use some of the knowledge acquired in this workshop
     and tree height (in the `trees` dataset), for each province at the plot level. For that
     you will need to summarise tree values, join with the leaf data, split by provinces and
     perform the model for each province.
+
+---
+layout: false
+class: thanks clear middle
+
+.font160[Thank you!]
+
+&lt;br&gt;
+
+<i class="fab  fa-twitter "></i> @multivac42  
+<i class="fab  fa-github "></i> https://github.com/ameztegui/  
+
+<i class="fab  fa-twitter "></i> @malditobarbudo  
+<i class="fab  fa-github "></i> https://github.com/malditobarbudo/  
+
+&lt;br&gt;
+
+Presentation repository:  
+<i class="fab  fa-github "></i> https://github.com/ameztegui/tidyverse_workshop
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"highlightStyle": "github",
+"highlightStyle": "tomorrow-night-eighties",
+"highlightLanguage": "r",
 "highlightLines": true,
 "countIncrementalSlides": false
 });
