@@ -13,6 +13,8 @@ output:
       highlightLanguage: r
       highlightLines: true
       countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -387,6 +389,53 @@ summarise(
 ## Exercise 5
 
 Which statistics would you calculate to characterize diameter values in each plot?
+
+---
+class: code60
+
+# Targeted transformations
+
+## `summarise_if` and `summarise_at`
+
+We can apply a summarising function to a group of variables...  
+
+  - that share some commmon characteristic that can be tested (i.e. numeric variables)
+
+```{r summarise_if}
+summarise_if(trees, is.numeric, mean)
+```
+
+  - by name or using the select helpers (`starts_with`, `ends_with`, `one_of`)
+
+```{r summarise_at}
+summarise_at(trees, vars(starts_with('Diam')), .funs = mean)
+```
+
+---
+class: code60
+
+# Targeted transformations
+
+## `mutate_if` and `mutate_at`
+
+The same can be done with `mutate`:
+
+.pull-left[
+```{r mutate_if}
+mutate_if(trees, is.numeric, log)
+```
+]
+
+.pull-right[
+```{r mutate_at}
+mutate_at(
+  trees, vars(one_of(c('Especie', 'Species'))),
+  ~ paste0('sp_', .x)
+)
+```
+]
+
+
 
 ---
 layout: true

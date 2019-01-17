@@ -642,6 +642,111 @@ summarise(
 Which statistics would you calculate to characterize diameter values in each plot?
 
 ---
+class: code60
+
+# Targeted transformations
+
+## `summarise_if` and `summarise_at`
+
+We can apply a summarising function to a group of variables...  
+
+  - that share some commmon characteristic that can be tested (i.e. numeric variables)
+
+
+```r
+summarise_if(trees, is.numeric, mean)
+```
+
+```
+## # A tibble: 1 x 7
+##   Rumbo  Dist   Fac    CD DiamIf3 DiamIf2 HeiIf3
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+## 1  198.  7.78  55.6  23.4    23.4    20.3   11.1
+```
+
+  - by name or using the select helpers (`starts_with`, `ends_with`, `one_of`)
+
+
+```r
+summarise_at(trees, vars(starts_with('Diam')), .funs = mean)
+```
+
+```
+## # A tibble: 1 x 2
+##   DiamIf3 DiamIf2
+##     &lt;dbl&gt;   &lt;dbl&gt;
+## 1    23.4    20.3
+```
+
+---
+class: code60
+
+# Targeted transformations
+
+## `mutate_if` and `mutate_at`
+
+The same can be done with `mutate`:
+
+.pull-left[
+
+```r
+mutate_if(trees, is.numeric, log)
+```
+
+```
+## # A tibble: 111,756 x 12
+##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist   Fac    CD
+##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 0800… 08        A     1        022      1.95 2.12   3.46  3.00
+##  2 0800… 08        A     1        476      3.64 2.21   3.46  3.56
+##  3 0800… 08        A     1        021      3.22 1.95   3.46  3.22
+##  4 0800… 08        A     1        021      3.33 2.18   3.46  2.71
+##  5 0800… 08        A     1        021      2.94 2.42   2.65  3.56
+##  6 0800… 08        A     1        021      3.47 2.48   2.65  3.56
+##  7 0800… 08        A     1        243      3.69 2.05   3.46  2.71
+##  8 0800… 08        A     1        045      2.77 1.63   3.46  3.00
+##  9 0800… 08        A     1        243      3.85 3.29   1.63  4.17
+## 10 0800… 08        A     1        022      3.78 0.993  4.85  2.71
+## # … with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
+## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;
+```
+]
+
+.pull-right[
+
+```r
+mutate_at(
+  trees, vars(one_of(c('Especie', 'Species'))),
+  ~ paste0('sp_', .x)
+)
+```
+
+```
+## Warning: Unknown columns: `Species`
+```
+
+```
+## # A tibble: 111,756 x 12
+##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
+##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 0800… 08        A     1        sp_022      7  8.3   31.8     20
+##  2 0800… 08        A     1        sp_476     38  9.1   31.8     35
+##  3 0800… 08        A     1        sp_021     25  7     31.8     25
+##  4 0800… 08        A     1        sp_021     28  8.89  31.8     15
+##  5 0800… 08        A     1        sp_021     19 11.2   14.1     35
+##  6 0800… 08        A     1        sp_021     32 12     14.1     35
+##  7 0800… 08        A     1        sp_243     40  7.8   31.8     15
+##  8 0800… 08        A     1        sp_045     16  5.09  31.8     20
+##  9 0800… 08        A     1        sp_243     47 26.9    5.09    65
+## 10 0800… 08        A     1        sp_022     44  2.7  127.      15
+## # … with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
+## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;
+```
+]
+
+
+
+---
 layout: true
 
 &lt;div class="tweaked-header" style="background-image: url(resources/images/pipe.png)"&gt;&lt;/div&gt;
