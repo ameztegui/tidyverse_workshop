@@ -104,7 +104,12 @@
   font-size: 15px;
   text-align: right;
   margin-left: 30px;
-  padding-top: 335px;
+  padding-top: 240px;
+}
+
+.title-slide > p {
+  color: #FAFAFA;
+  margin-left: 15px;
 }
 
 .remark-slide-number {
@@ -280,4 +285,8 @@ div.tweaked-header {
 
 .thanks h2 {
   color: #FAFAFA;
+}
+
+.blue {
+  color: #19b5fe;
 }
