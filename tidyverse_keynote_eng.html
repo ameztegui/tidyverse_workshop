@@ -3,7 +3,7 @@
   <head>
     <title>An introduction to the tidyverse</title>
     <meta charset="utf-8">
-    <meta name="author" content="Aitor Ameztegui &amp; Víctor Granda" />
+    <meta name="author" content="Aitor Ameztegui &amp; VÃ­ctor Granda" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="custom.css" type="text/css" />
@@ -22,13 +22,13 @@ class: title-slide
 ## tidyr, dplyr and purrr
 
 ### Aitor Ameztegui .blue[@multivac42]  
-.font70[Lleida University]
+.font70[University of Lleida]
 
-### Víctor Granda .blue[@MalditoBarbudo]  
+### VÃ­ctor Granda .blue[@MalditoBarbudo]  
 .font70[Joint Research Unit CTFC-CREAF]
 
 
-#### **I SIbEcol meeting** (Barcelona, 4 de Febrero de 2019)
+#### **I SIBECOL meeting** (Barcelona, 4 de Febrero de 2019)
 
 
 ---
@@ -63,8 +63,7 @@ to ease the data analysis in all its steps.
 - Neither `tidyr`, nor `dplyr` or `purrr` do anything that can't be done with
   base R code, apply family functions, for-loops or other packages.  
 
-- Designed to be more eficient (in time), easier to read and easier to use
-  (it may requires some adaptation if used to base R code).  
+- Designed to be more efficient (in time), easier to read and easier to use. More intuitive to use, specially for beginners (it may requires some adaptation if used to base R code).
 
 - Valid mostly for data.frames. For other formats (matrices, arrays) `plyr` can
   be used.
@@ -80,22 +79,25 @@ to ease the data analysis in all its steps.
 --
 
   - Data in **tidy** format eases the processing and analysis, particularly in
-    vectorized lenguages as R can be.
+    vectorized lenguages as R.
     
 ---
 
 # our data
 
-  1. `plots [11858 x 15]`: all plots from the Third Spanish Forest Inventory
-     (IFN3) in Catalonia
+  1. `plots [11858 x 15]`: all plots from the Third Spanish Forest Inventory (IFN3) in Catalonia
   
+     
   2. `trees [111756 x 12]`: all trees with dbh &gt; 7.5 cm measured in both
      IFN2 and IFN3
+     
   
   3. `species [14778 x 15]`: number of trees per hectare in each plot, by
      species and size class
+     
   
   4. `coordinates [11858 x 6]`: X and Y UTM coordinates of each plot.
+  
   
   5. `leaf [10447 x 3]`: leaf biomass and carbon content for those IFN 3 plots where they
     where available
@@ -113,19 +115,19 @@ trees
 
 ```
 ## # A tibble: 111,756 x 12
-##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
-##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-##  1 0800… 08        A     1        022         7  8.3   31.8     20
-##  2 0800… 08        A     1        476        38  9.1   31.8     35
-##  3 0800… 08        A     1        021        25  7     31.8     25
-##  4 0800… 08        A     1        021        28  8.89  31.8     15
-##  5 0800… 08        A     1        021        19 11.2   14.1     35
-##  6 0800… 08        A     1        021        32 12     14.1     35
-##  7 0800… 08        A     1        243        40  7.8   31.8     15
-##  8 0800… 08        A     1        045        16  5.09  31.8     20
-##  9 0800… 08        A     1        243        47 26.9    5.09    65
-## 10 0800… 08        A     1        022        44  2.7  127.      15
-## # … with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
+##    Codi   Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
+##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 080001 08        A     1        022         7  8.3   31.8     20
+##  2 080002 08        A     1        476        38  9.1   31.8     35
+##  3 080003 08        A     1        021        25  7     31.8     25
+##  4 080004 08        A     1        021        28  8.89  31.8     15
+##  5 080006 08        A     1        021        19 11.2   14.1     35
+##  6 080007 08        A     1        021        32 12     14.1     35
+##  7 080008 08        A     1        243        40  7.8   31.8     15
+##  8 080009 08        A     1        045        16  5.09  31.8     20
+##  9 080010 08        A     1        243        47 26.9    5.09    65
+## 10 080013 08        A     1        022        44  2.7  127.      15
+## # ... with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
 ## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;
 ```
 
@@ -133,13 +135,25 @@ trees
 
 # let's have a look at the data
 
+
+```r
+class(trees)
+```
+
+```
+## [1] "tbl_df"     "tbl"        "data.frame"
+```
+
 Tibbles, not usual data.frames:
 
   - class `tbl_df`
   
   - print only 10 rows by default
   
-  - inform about variable types
+  - informs about variable types
+  
+  - Besides that, it is like a data.frame
+  (it *is* a data.frame)
 
 ---
 layout: false
@@ -190,19 +204,19 @@ filter(trees, Dist &lt; 3)
 
 ```
 ## # A tibble: 11,601 x 12
-##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist   Fac    CD
-##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 0800… 08        A     1        022        44  2.7   127.    15
-##  2 0800… 08        A     1        021         9  1     127.    30
-##  3 0800… 08        A     1        021         2  0.6   127.    25
-##  4 0800… 08        A     1        021        17  2.59  127.    15
-##  5 0800… 08        A     1        022         5  2.29  127.    20
-##  6 0800… 08        A     1        022        10  2.09  127.    15
-##  7 0801… 08        A     1        476         3  2.29  127.    10
-##  8 0801… 08        A     1        243        24  2.7   127.    10
-##  9 0801… 08        A     1        243       103  2.79  127.    10
-## 10 0801… 08        A     1        021         2  2     127.    25
-## # … with 11,591 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
+##    Codi   Provincia Cla   Subclase Especie Rumbo  Dist   Fac    CD
+##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 080013 08        A     1        022        44  2.7   127.    15
+##  2 080015 08        A     1        021         9  1     127.    30
+##  3 080027 08        A     1        021         2  0.6   127.    25
+##  4 080034 08        A     1        021        17  2.59  127.    15
+##  5 080051 08        A     1        022         5  2.29  127.    20
+##  6 080065 08        A     1        022        10  2.09  127.    15
+##  7 080118 08        A     1        476         3  2.29  127.    10
+##  8 080188 08        A     1        243        24  2.7   127.    10
+##  9 080197 08        A     1        243       103  2.79  127.    10
+## 10 080198 08        A     1        021         2  2     127.    25
+## # ... with 11,591 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
 ## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;
 ```
 
@@ -218,19 +232,19 @@ filter(trees, Provincia == '25')
 
 ```
 ## # A tibble: 35,665 x 12
-##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
-##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-##  1 2500… 25        A     1        071        59 29.3    5.09    70
-##  2 2500… 25        A     1        071        18 25.5    5.09    50
-##  3 2500… 25        A     1        042        19 22.4    5.09    70
-##  4 2500… 25        A     1        255        26  7.3   31.8     30
-##  5 2500… 25        A     1        071        40  8.89  31.8     15
-##  6 2500… 25        A     1        042       203  3.79 127.      15
-##  7 2500… 25        A     1        071        34  7.4   31.8     50
-##  8 2500… 25        A     1        031        51 21.5    5.09    55
-##  9 2500… 25        A     1        071         4 13.5   14.1     50
-## 10 2500… 25        A     1        073        40 10.3   14.1     20
-## # … with 35,655 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
+##    Codi   Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
+##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 250001 25        A     1        071        59 29.3    5.09    70
+##  2 250002 25        A     1        071        18 25.5    5.09    50
+##  3 250004 25        A     1        042        19 22.4    5.09    70
+##  4 250005 25        A     1        255        26  7.3   31.8     30
+##  5 250007 25        A     1        071        40  8.89  31.8     15
+##  6 250008 25        A     1        042       203  3.79 127.      15
+##  7 250010 25        A     1        071        34  7.4   31.8     50
+##  8 250011 25        A     1        031        51 21.5    5.09    55
+##  9 250012 25        A     1        071         4 13.5   14.1     50
+## 10 250013 25        A     1        073        40 10.3   14.1     20
+## # ... with 35,655 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
 ## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;
 ```
 
@@ -245,19 +259,19 @@ filter(trees, CD %in% c(45, 70))
 
 ```
 ## # A tibble: 2,552 x 12
-##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist   Fac    CD
-##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 0800… 08        A     1        071         9 26.9   5.09    45
-##  2 0801… 08        A     1        021        19 11.1  14.1     70
-##  3 0806… 08        A     1        042        43  7.09 31.8     45
-##  4 0807… 08        A     1        042        16 15.8   5.09    45
-##  5 0807… 08        A     1        042         3  9.69 31.8     45
-##  6 0812… 08        A     1        024        93 10.8  14.1     45
-##  7 0812… 08        A     1        024        87 10.1  14.1     45
-##  8 0813… 08        A     1        026        16  8.6  31.8     45
-##  9 0814… 08        A     1        054        51  5.19 31.8     70
-## 10 0819… 08        A     1        024         1 10.3  14.1     45
-## # … with 2,542 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
+##    Codi   Provincia Cla   Subclase Especie Rumbo  Dist   Fac    CD
+##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 080016 08        A     1        071         9 26.9   5.09    45
+##  2 080113 08        A     1        021        19 11.1  14.1     70
+##  3 080686 08        A     1        042        43  7.09 31.8     45
+##  4 080721 08        A     1        042        16 15.8   5.09    45
+##  5 080743 08        A     1        042         3  9.69 31.8     45
+##  6 081271 08        A     1        024        93 10.8  14.1     45
+##  7 081278 08        A     1        024        87 10.1  14.1     45
+##  8 081354 08        A     1        026        16  8.6  31.8     45
+##  9 081402 08        A     1        054        51  5.19 31.8     70
+## 10 081943 08        A     1        024         1 10.3  14.1     45
+## # ... with 2,542 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
 ## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;
 ```
 
@@ -293,19 +307,19 @@ trees
 
 ```
 ## # A tibble: 111,756 x 12
-##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
-##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-##  1 0800… 08        A     1        022         7  8.3   31.8     20
-##  2 0800… 08        A     1        476        38  9.1   31.8     35
-##  3 0800… 08        A     1        021        25  7     31.8     25
-##  4 0800… 08        A     1        021        28  8.89  31.8     15
-##  5 0800… 08        A     1        021        19 11.2   14.1     35
-##  6 0800… 08        A     1        021        32 12     14.1     35
-##  7 0800… 08        A     1        243        40  7.8   31.8     15
-##  8 0800… 08        A     1        045        16  5.09  31.8     20
-##  9 0800… 08        A     1        243        47 26.9    5.09    65
-## 10 0800… 08        A     1        022        44  2.7  127.      15
-## # … with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
+##    Codi   Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
+##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 080001 08        A     1        022         7  8.3   31.8     20
+##  2 080002 08        A     1        476        38  9.1   31.8     35
+##  3 080003 08        A     1        021        25  7     31.8     25
+##  4 080004 08        A     1        021        28  8.89  31.8     15
+##  5 080006 08        A     1        021        19 11.2   14.1     35
+##  6 080007 08        A     1        021        32 12     14.1     35
+##  7 080008 08        A     1        243        40  7.8   31.8     15
+##  8 080009 08        A     1        045        16  5.09  31.8     20
+##  9 080010 08        A     1        243        47 26.9    5.09    65
+## 10 080013 08        A     1        022        44  2.7  127.      15
+## # ... with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
 ## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;
 ```
 
@@ -332,7 +346,7 @@ select(trees, DiamIf3)
 ##  8    17.5
 ##  9    67.4
 ## 10    15.1
-## # … with 111,746 more rows
+## # ... with 111,746 more rows
 ```
 
 ---
@@ -358,7 +372,7 @@ select(trees, -Codi)
 ##  8 08        A     1        045        16  5.09  31.8     20    17.5
 ##  9 08        A     1        243        47 26.9    5.09    65    67.4
 ## 10 08        A     1        022        44  2.7  127.      15    15.1
-## # … with 111,746 more rows, and 2 more variables: DiamIf2 &lt;dbl&gt;,
+## # ... with 111,746 more rows, and 2 more variables: DiamIf2 &lt;dbl&gt;,
 ## #   HeiIf3 &lt;dbl&gt;
 ```
 
@@ -385,7 +399,7 @@ select(trees, Codi:Cla)
 ##  8 080009 08        A    
 ##  9 080010 08        A    
 ## 10 080013 08        A    
-## # … with 111,746 more rows
+## # ... with 111,746 more rows
 ```
 
 ---
@@ -425,7 +439,7 @@ select(trees, starts_with('Diam'))
 ##  8    17.5    15.3
 ##  9    67.4    66.8
 ## 10    15.1    12.6
-## # … with 111,746 more rows
+## # ... with 111,746 more rows
 ```
 
 ---
@@ -448,19 +462,19 @@ arrange(trees, Dist)
 
 ```
 ## # A tibble: 111,756 x 12
-##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist   Fac    CD
-##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 1706… 17        A     1        021        73   0    127.    15
-##  2 2518… 25        A     1        025       174   0.3  127.    15
-##  3 1706… 17        A     1        045       290   0.3  127.    10
-##  4 0815… 08        A     1        025       176   0.3  127.    20
-##  5 0810… 08        A     1        025       107   0.4  127.    15
-##  6 4301… 43        A     1        024         0   0.4  127.    25
-##  7 4306… 43        A     1        021        17   0.4  127.    15
-##  8 1719… 17        A     1        079       150   0.4  127.    20
-##  9 1719… 17        A     1        045        34   0.4  127.    25
-## 10 1720… 17        A     1        045       160   0.4  127.    15
-## # … with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
+##    Codi   Provincia Cla   Subclase Especie Rumbo  Dist   Fac    CD
+##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 170672 17        A     1        021        73   0    127.    15
+##  2 251882 25        A     1        025       174   0.3  127.    15
+##  3 170640 17        A     1        045       290   0.3  127.    10
+##  4 081544 08        A     1        025       176   0.3  127.    20
+##  5 081080 08        A     1        025       107   0.4  127.    15
+##  6 430170 43        A     1        024         0   0.4  127.    25
+##  7 430631 43        A     1        021        17   0.4  127.    15
+##  8 171941 17        A     1        079       150   0.4  127.    20
+##  9 171990 17        A     1        045        34   0.4  127.    25
+## 10 172056 17        A     1        045       160   0.4  127.    15
+## # ... with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
 ## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;
 ```
 
@@ -476,19 +490,19 @@ arrange(trees, desc(Dist))
 
 ```
 ## # A tibble: 111,756 x 12
-##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist   Fac    CD
-##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 2500… 25        A     1        042       398  36.5  5.09    70
-##  2 2500… 25        A     1        031       350  34.8  5.09    70
-##  3 2501… 25        A     1        022       158  33.9  5.09    50
-##  4 2500… 25        A     1        021       110  33.6  5.09    60
-##  5 2500… 25        A     1        031       238  33.5  5.09    50
-##  6 2500… 25        A     1        071       214  32.9  5.09    70
-##  7 2517… 25        A     1        045       163  32.8  5.09    60
-##  8 2500… 25        A     1        031       119  32.5  5.09    65
-##  9 2500… 25        A     1        031       390  32.1  5.09    45
-## 10 1712… 17        A     1        071        38  31.4  5.09    60
-## # … with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
+##    Codi   Provincia Cla   Subclase Especie Rumbo  Dist   Fac    CD
+##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 250008 25        A     1        042       398  36.5  5.09    70
+##  2 250025 25        A     1        031       350  34.8  5.09    70
+##  3 250135 25        A     1        022       158  33.9  5.09    50
+##  4 250051 25        A     1        021       110  33.6  5.09    60
+##  5 250025 25        A     1        031       238  33.5  5.09    50
+##  6 250010 25        A     1        071       214  32.9  5.09    70
+##  7 251788 25        A     1        045       163  32.8  5.09    60
+##  8 250039 25        A     1        031       119  32.5  5.09    65
+##  9 250025 25        A     1        031       390  32.1  5.09    45
+## 10 171289 17        A     1        071        38  31.4  5.09    60
+## # ... with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
 ## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;
 ```
 
@@ -518,19 +532,19 @@ mutate(
 
 ```
 ## # A tibble: 111,756 x 12
-##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
-##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-##  1 0800… 08        A     1        022         7  830.  31.8     20
-##  2 0800… 08        A     1        476        38  910   31.8     35
-##  3 0800… 08        A     1        021        25  700   31.8     25
-##  4 0800… 08        A     1        021        28  889   31.8     15
-##  5 0800… 08        A     1        021        19 1119   14.1     35
-##  6 0800… 08        A     1        021        32 1200   14.1     35
-##  7 0800… 08        A     1        243        40  780   31.8     15
-##  8 0800… 08        A     1        045        16  509   31.8     20
-##  9 0800… 08        A     1        243        47 2689    5.09    65
-## 10 0800… 08        A     1        022        44  270  127.      15
-## # … with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
+##    Codi   Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
+##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 080001 08        A     1        022         7  830.  31.8     20
+##  2 080002 08        A     1        476        38  910   31.8     35
+##  3 080003 08        A     1        021        25  700   31.8     25
+##  4 080004 08        A     1        021        28  889   31.8     15
+##  5 080006 08        A     1        021        19 1119   14.1     35
+##  6 080007 08        A     1        021        32 1200   14.1     35
+##  7 080008 08        A     1        243        40  780   31.8     15
+##  8 080009 08        A     1        045        16  509   31.8     20
+##  9 080010 08        A     1        243        47 2689    5.09    65
+## 10 080013 08        A     1        022        44  270  127.      15
+## # ... with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
 ## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;
 ```
 
@@ -550,19 +564,19 @@ mutate(
 
 ```
 ## # A tibble: 111,756 x 14
-##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
-##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-##  1 0800… 08        A     1        022         7  8.3   31.8     20
-##  2 0800… 08        A     1        476        38  9.1   31.8     35
-##  3 0800… 08        A     1        021        25  7     31.8     25
-##  4 0800… 08        A     1        021        28  8.89  31.8     15
-##  5 0800… 08        A     1        021        19 11.2   14.1     35
-##  6 0800… 08        A     1        021        32 12     14.1     35
-##  7 0800… 08        A     1        243        40  7.8   31.8     15
-##  8 0800… 08        A     1        045        16  5.09  31.8     20
-##  9 0800… 08        A     1        243        47 26.9    5.09    65
-## 10 0800… 08        A     1        022        44  2.7  127.      15
-## # … with 111,746 more rows, and 5 more variables: DiamIf3 &lt;dbl&gt;,
+##    Codi   Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
+##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 080001 08        A     1        022         7  8.3   31.8     20
+##  2 080002 08        A     1        476        38  9.1   31.8     35
+##  3 080003 08        A     1        021        25  7     31.8     25
+##  4 080004 08        A     1        021        28  8.89  31.8     15
+##  5 080006 08        A     1        021        19 11.2   14.1     35
+##  6 080007 08        A     1        021        32 12     14.1     35
+##  7 080008 08        A     1        243        40  7.8   31.8     15
+##  8 080009 08        A     1        045        16  5.09  31.8     20
+##  9 080010 08        A     1        243        47 26.9    5.09    65
+## 10 080013 08        A     1        022        44  2.7  127.      15
+## # ... with 111,746 more rows, and 5 more variables: DiamIf3 &lt;dbl&gt;,
 ## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;, Alometria &lt;dbl&gt;, Alometria2 &lt;dbl&gt;
 ```
 
@@ -581,7 +595,7 @@ mutate(
 
 .center[Clue:]
 $$
-AB = \frac{\pi}{4} · Diam^{2} · N
+AB = \frac{\pi}{4} Â· Diam^{2} Â· N
 $$
 ---
 
@@ -606,8 +620,11 @@ summarise(trees, mean_if3 = mean(DiamIf3))
 ## Summary functions
 
   - `min(x)`, `max(x)`, `quantile(x, p)`
+  
   - `mean(x)`, `median(x)`, 
+  
   - `sd(x)`, `var(x)`, `IQR(x)`
+  
   - `n()`, `n_distinct(x)`
   
   - `sum(x &gt; 10)`, `mean(x &gt; 10)`
@@ -701,19 +718,19 @@ mutate_if(trees, is.numeric, log)
 
 ```
 ## # A tibble: 111,756 x 12
-##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist   Fac    CD
-##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 0800… 08        A     1        022      1.95 2.12   3.46  3.00
-##  2 0800… 08        A     1        476      3.64 2.21   3.46  3.56
-##  3 0800… 08        A     1        021      3.22 1.95   3.46  3.22
-##  4 0800… 08        A     1        021      3.33 2.18   3.46  2.71
-##  5 0800… 08        A     1        021      2.94 2.42   2.65  3.56
-##  6 0800… 08        A     1        021      3.47 2.48   2.65  3.56
-##  7 0800… 08        A     1        243      3.69 2.05   3.46  2.71
-##  8 0800… 08        A     1        045      2.77 1.63   3.46  3.00
-##  9 0800… 08        A     1        243      3.85 3.29   1.63  4.17
-## 10 0800… 08        A     1        022      3.78 0.993  4.85  2.71
-## # … with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
+##    Codi   Provincia Cla   Subclase Especie Rumbo  Dist   Fac    CD
+##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 080001 08        A     1        022      1.95 2.12   3.46  3.00
+##  2 080002 08        A     1        476      3.64 2.21   3.46  3.56
+##  3 080003 08        A     1        021      3.22 1.95   3.46  3.22
+##  4 080004 08        A     1        021      3.33 2.18   3.46  2.71
+##  5 080006 08        A     1        021      2.94 2.42   2.65  3.56
+##  6 080007 08        A     1        021      3.47 2.48   2.65  3.56
+##  7 080008 08        A     1        243      3.69 2.05   3.46  2.71
+##  8 080009 08        A     1        045      2.77 1.63   3.46  3.00
+##  9 080010 08        A     1        243      3.85 3.29   1.63  4.17
+## 10 080013 08        A     1        022      3.78 0.993  4.85  2.71
+## # ... with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
 ## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;
 ```
 ]
@@ -733,19 +750,19 @@ mutate_at(
 
 ```
 ## # A tibble: 111,756 x 12
-##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
-##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-##  1 0800… 08        A     1        sp_022      7  8.3   31.8     20
-##  2 0800… 08        A     1        sp_476     38  9.1   31.8     35
-##  3 0800… 08        A     1        sp_021     25  7     31.8     25
-##  4 0800… 08        A     1        sp_021     28  8.89  31.8     15
-##  5 0800… 08        A     1        sp_021     19 11.2   14.1     35
-##  6 0800… 08        A     1        sp_021     32 12     14.1     35
-##  7 0800… 08        A     1        sp_243     40  7.8   31.8     15
-##  8 0800… 08        A     1        sp_045     16  5.09  31.8     20
-##  9 0800… 08        A     1        sp_243     47 26.9    5.09    65
-## 10 0800… 08        A     1        sp_022     44  2.7  127.      15
-## # … with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
+##    Codi   Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
+##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 080001 08        A     1        sp_022      7  8.3   31.8     20
+##  2 080002 08        A     1        sp_476     38  9.1   31.8     35
+##  3 080003 08        A     1        sp_021     25  7     31.8     25
+##  4 080004 08        A     1        sp_021     28  8.89  31.8     15
+##  5 080006 08        A     1        sp_021     19 11.2   14.1     35
+##  6 080007 08        A     1        sp_021     32 12     14.1     35
+##  7 080008 08        A     1        sp_243     40  7.8   31.8     15
+##  8 080009 08        A     1        sp_045     16  5.09  31.8     20
+##  9 080010 08        A     1        sp_243     47 26.9    5.09    65
+## 10 080013 08        A     1        sp_022     44  2.7  127.      15
+## # ... with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
 ## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;
 ```
 ]
@@ -1010,9 +1027,9 @@ Data is not always organized...
 ##  8 AD     1997    NA    NA     0     0     1     2     2     1     6
 ##  9 AD     1998    NA    NA     0     0     0     1     0     0     0
 ## 10 AD     1999    NA    NA     0     0     0     1     1     0     0
-## # … with 5,759 more rows, and 11 more variables: mu &lt;int&gt;, f04 &lt;int&gt;,
-## #   f514 &lt;int&gt;, f014 &lt;int&gt;, f1524 &lt;int&gt;, f2534 &lt;int&gt;, f3544 &lt;int&gt;,
-## #   f4554 &lt;int&gt;, f5564 &lt;int&gt;, f65 &lt;int&gt;, fu &lt;int&gt;
+## # ... with 5,759 more rows, and 11 more variables: mu &lt;int&gt;,
+## #   f04 &lt;int&gt;, f514 &lt;int&gt;, f014 &lt;int&gt;, f1524 &lt;int&gt;, f2534 &lt;int&gt;,
+## #   f3544 &lt;int&gt;, f4554 &lt;int&gt;, f5564 &lt;int&gt;, f65 &lt;int&gt;, fu &lt;int&gt;
 ```
 
 ---
@@ -1035,7 +1052,7 @@ Data is not always organized...
 ##  8 AD     1996 m     014           0
 ##  9 AD     1996 m     1524          0
 ## 10 AD     1996 m     2534          0
-## # … with 35,740 more rows
+## # ... with 35,740 more rows
 ```
 ]
 
@@ -1366,19 +1383,19 @@ list.files('data', '.csv', full.names = TRUE) %&gt;%
 
 ```
 ## # A tibble: 111,756 x 12
-##    Codi  Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
-##    &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-##  1 0800… 08        A     1        022         7  8.3   31.8     20
-##  2 0800… 08        A     1        476        38  9.1   31.8     35
-##  3 0800… 08        A     1        021        25  7     31.8     25
-##  4 0800… 08        A     1        021        28  8.89  31.8     15
-##  5 0800… 08        A     1        021        19 11.2   14.1     35
-##  6 0800… 08        A     1        021        32 12     14.1     35
-##  7 0800… 08        A     1        243        40  7.8   31.8     15
-##  8 0800… 08        A     1        045        16  5.09  31.8     20
-##  9 0800… 08        A     1        243        47 26.9    5.09    65
-## 10 0800… 08        A     1        022        44  2.7  127.      15
-## # … with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
+##    Codi   Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD
+##    &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;
+##  1 080001 08        A     1        022         7  8.3   31.8     20
+##  2 080002 08        A     1        476        38  9.1   31.8     35
+##  3 080003 08        A     1        021        25  7     31.8     25
+##  4 080004 08        A     1        021        28  8.89  31.8     15
+##  5 080006 08        A     1        021        19 11.2   14.1     35
+##  6 080007 08        A     1        021        32 12     14.1     35
+##  7 080008 08        A     1        243        40  7.8   31.8     15
+##  8 080009 08        A     1        045        16  5.09  31.8     20
+##  9 080010 08        A     1        243        47 26.9    5.09    65
+## 10 080013 08        A     1        022        44  2.7  127.      15
+## # ... with 111,746 more rows, and 3 more variables: DiamIf3 &lt;dbl&gt;,
 ## #   DiamIf2 &lt;dbl&gt;, HeiIf3 &lt;dbl&gt;
 ```
 
@@ -1454,7 +1471,7 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

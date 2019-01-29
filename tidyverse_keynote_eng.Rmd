@@ -30,13 +30,13 @@ class: title-slide
 ## tidyr, dplyr and purrr
 
 ### Aitor Ameztegui .blue[@multivac42]  
-.font70[Lleida University]
+.font70[University of Lleida]
 
 ### Víctor Granda .blue[@MalditoBarbudo]  
 .font70[Joint Research Unit CTFC-CREAF]
 
 
-#### **I SIbEcol meeting** (Barcelona, 4 de Febrero de 2019)
+#### **I SIBECOL meeting** (Barcelona, 4 de Febrero de 2019)
 
 
 ---
@@ -71,8 +71,7 @@ to ease the data analysis in all its steps.
 - Neither `tidyr`, nor `dplyr` or `purrr` do anything that can't be done with
   base R code, apply family functions, for-loops or other packages.  
 
-- Designed to be more eficient (in time), easier to read and easier to use
-  (it may requires some adaptation if used to base R code).  
+- Designed to be more efficient (in time), easier to read and easier to use. More intuitive to use, specially for beginners (it may requires some adaptation if used to base R code).
 
 - Valid mostly for data.frames. For other formats (matrices, arrays) `plyr` can
   be used.
@@ -88,15 +87,14 @@ to ease the data analysis in all its steps.
 --
 
   - Data in **tidy** format eases the processing and analysis, particularly in
-    vectorized lenguages as R can be.
+    vectorized lenguages as R.
     
 ---
 
 # our data
 
-  1. `plots [11858 x 15]`: all plots from the Third Spanish Forest Inventory
-     (IFN3) in Catalonia
-  
+  1. `plots [11858 x 15]`: all plots from the Third Spanish Forest Inventory (IFN3) in Catalonia
+     
   2. `trees [111756 x 12]`: all trees with dbh > 7.5 cm measured in both
      IFN2 and IFN3
   
@@ -126,13 +124,20 @@ trees
 
 # let's have a look at the data
 
+```{r tibbles_class, }
+class(trees)
+```
+
 Tibbles, not usual data.frames:
 
   - class `tbl_df`
   
   - print only 10 rows by default
   
-  - inform about variable types
+  - informs about variable types
+  
+  - Besides that, it is like a data.frame
+  (it *is* a data.frame)
 
 ---
 layout: false
@@ -366,8 +371,11 @@ summarise(trees, mean_if3 = mean(DiamIf3))
 ## Summary functions
 
   - `min(x)`, `max(x)`, `quantile(x, p)`
+  
   - `mean(x)`, `median(x)`, 
+  
   - `sd(x)`, `var(x)`, `IQR(x)`
+  
   - `n()`, `n_distinct(x)`
   
   - `sum(x > 10)`, `mean(x > 10)`
