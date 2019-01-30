@@ -203,6 +203,11 @@ verb(data, ...)
 `filter`
 ]]]
 
+
+
+.center[![](resources/images/filter.png)]
+
+
 ---
 
 # Selecting rows (`filter`)
@@ -253,6 +258,8 @@ Let's find those plots in IFN3n (`plots` data frame) that:
 .middle[.center[.font200[
 `select`
 ]]]
+.center[![](resources/images/select.png)]
+
 
 ---
 
@@ -322,6 +329,7 @@ of plot measuring
 .middle[.center[.font200[
 `arrange`
 ]]]
+.center[![](resources/images/arrange.png)]
 
 ---
 
@@ -357,6 +365,7 @@ arrange(trees, desc(Dist))
 .middle[.center[.font200[
 `mutate`
 ]]]
+.center[![](resources/images/mutate.png)]
 
 ---
 
@@ -406,7 +415,7 @@ mutate(
   4.1 Get growth (in cm) of each tree between IFN2 and IFN3
 
   4.2 Create two new variables with basal area per hectare of each tree, both for IFN2 and
-      Ifn3. Which is the species of the fastest-growing tree in basal area?
+      IfN3. Which is the species of the fastest-growing tree in basal area?
 
 <br>
 
@@ -420,6 +429,7 @@ $$
 .middle[.center[.font200[
 `summarise`
 ]]]
+.center[![](resources/images/summarise.png)]
 
 ---
 
@@ -444,6 +454,15 @@ summarise(trees, mean_if3 = mean(DiamIf3))
   - `n()`, `n_distinct(x)`
   
   - `sum(x > 10)`, `mean(x > 10)`
+---
+
+.middle[.center[.font200[
+`grouped summarise`
+]]]
+
+
+
+.center[![](resources/images/group_summarise.png)]
 
 ---
 
@@ -457,6 +476,8 @@ by_province
 ```
 
 ---
+
+
 
 # Reducing variables (`summarise`)
 
@@ -668,8 +689,19 @@ Create pipelines to answer the following questions:
 layout: true
 
 <div class="tweaked-header" style="background-image: url(resources/images/dplyr.png)"></div>
+---
+
+.middle[.center[.font200[
+`grouped mutate`
+]]]
+
+
+
+.center[![](resources/images/group_mutate.png)]
+
 
 ---
+
 class: code60
 
 # Grouped `mutate`/`filter`
@@ -834,6 +866,8 @@ verb(data, ...)
 .middle[.center[.font200[
 `gather` & `separate`
 ]]]
+.center[![](resources/images/gather.png)]
+.center[![](resources/images/separate.png)]
 
 ---
 
@@ -896,6 +930,8 @@ species
 .middle[.center[.font200[
 `spread` & `unite`
 ]]]
+.center[![](resources/images/spread.png)]
+.center[![](resources/images/unite.png)]
 
 ---
 
