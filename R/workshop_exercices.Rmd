@@ -1,19 +1,19 @@
 ---
 title: "Introduction to the tidyverse: `dplyr`, `tidyr` and `purrr`"
-author: "Aitor Ameztegui, Víctor Granda"
+author: "Aitor Ameztegui, V?ctor Granda"
 date: "February 2019"
 output:
+    pdf_document:
+    toc: true
     html_document:
         toc: true
-    toc: true
-    pdf_document:
     fontsize: 12pt;
 ---
 \newpage
 
 # Introduction
 
-Thi is a `RMarkdown` document generated to illustrate the exercices suggested as part of the Workshop "Introduction to the tidyverse", that will be celebrated in Barcelona within the 1st Meeting of the Iberian Ecological Society and the XIV AEET Meeting. All the code and the data needed to produce this document can be found in GitHub ([https://github.com/ameztegui/dplyr_workshop](https://github.com/ameztegui/dplyr_workshop)). For any doubt about the exercises, you can contact Aitor Ameztegui ([ameztegui@gmail.com](ameztegui@gmail.com)) or Víctor Granda  ([ameztegui@gmail.com](ameztegui@gmail.com)).
+Thi is a `RMarkdown` document generated to illustrate the exercices suggested as part of the Workshop "Introduction to the tidyverse", that will be celebrated in Barcelona within the 1st Meeting of the Iberian Ecological Society and the XIV AEET Meeting. All the code and the data needed to produce this document can be found in GitHub ([https://github.com/ameztegui/dplyr_workshop](https://github.com/ameztegui/dplyr_workshop)). For any doubt about the exercises, you can contact Aitor Ameztegui ([ameztegui@gmail.com](ameztegui@gmail.com)) or V?ctor Granda  ([ameztegui@gmail.com](ameztegui@gmail.com)).
 
 The packages` tidyr`, `dplyr`, and `purrr` are part of a set of packages known as the  [`tidyverse`](https://cran.r-project.org/web/packages/tidyverse/index.html), created by [Hadley Wickham](https://github.com/hadley), Chief Scientist in RStudio. The `tidyverse` was created to easen data analysis and data management. It consists on packages to import and read data, to organize and modify them, to analyze and model them and to visualize them. In this seminar we will focus on `tidyr`, conceived to help organize data, and `dplyr`, that focuses on data transformation. We must firs install these packages (if we haven't done it yet). To install all the packages from the `tidyverse` at once we  need to write  ```install.packages("tidyverse")```. Then we need to load the packages by typing:
 
@@ -132,7 +132,7 @@ As we see, we can do operations within `filter` conditions. In this case, we wan
 
 ## `select`
 
-`select` allows to retain only some columns, based on their name. To help us find the columns, there are some specific functions such as `starts_with` or `contains`, that only work within `select`. We can see the list of special functions by typing `help("select")`
+`select` allows to retain only some columns, based on their name. To help us find the columns, there are some specific functions such as `starts_with` or `contains`, that only work within `select`. We can see the list of special functions by typing `help("select")` 
 
 ###Exercise 2
 To practice with `select` let's try to find 4 different ways of selecting the variables that specify the starting and ending date of measurement of the plots (FechaIni y FechaFin)
@@ -205,8 +205,8 @@ trees <- mutate (trees, growth= DiamIf3 - DiamIf2)
 Which species was the fastest growing tree in basal area?
 
 ```{r, results="hide"}
-trees <- mutate(trees, BAIf2= (((pi/4)*(DiamIf2/100)^2)*Fac),
-                BAIf3= (((pi/4)*(DiamIf3/100)^2)*Fac),
+trees <- mutate(trees, BAIf2= (((pi/4)*(DiamIf2/100)^2)*N),
+                BAIf3= (((pi/4)*(DiamIf3/100)^2)*N),
                 BA_growth = BAIf3 - BAIf2)
 
 arrange(trees, desc(BA_growth))
@@ -220,7 +220,7 @@ As we see, we can calculate new variables based on the variables we just created
 
 To use `group_by` we just need to indicate the data frame and the variable we want to group it by. To be more efficient, `dplyr` does not create a copy of the data frame, but it creates a hidden variable that indexes the groups, so that when we ask it to perform operations by group, it know to which group belongs each observation. 
 
-In the case of our data frame `trees`, there are several groups that could be of interest el caso de nuestra base de datos de pies trees, hay varios grupos que pueden tener interés:
+In the case of our data frame `trees`, there are several groups that could be of interest el caso de nuestra base de datos de pies trees, hay varios grupos que pueden tener inter?s:
 
 ```{r, results="hide"}
 
@@ -233,7 +233,7 @@ by_plot <- group_by (trees, Codi)
 # Por especie
 by_species <- group_by (trees, Especie)
 
-#Por clase diamétrica
+#Por clase diam?trica
 by_CD <- group_by (trees, CD)
 
 #Por parcela y especie
@@ -355,7 +355,8 @@ Taking this into account, let's try to:
 trees %>%
     mutate(growth=DiamIf3-DiamIf2) %>%
     group_by(Codi) %>%
-    mutate(des = (growth - mean(growth))/sd(growth)) %>%
+    mutate(plot_mean= mean(growth),
+           des = (growth - plot_mean)) %>%
     arrange(desc(des))
 ```
 
@@ -436,7 +437,7 @@ In this case, the output contains a column, named `mod` (the name was defined by
 models$mod[models$Especie=="021"]
 ```
 
-o bien podríamos hacer
+o bien podr?amos hacer
 
 ```{r}
 filter(models, Especie =="021")$mod
@@ -553,8 +554,15 @@ To convert it into the 'long' format we specify the data frame, then the new fac
 ```{r,results="hide"}
     gather(species, CD, n, CD_10:CD_70)
 ```
-    
-* (C) Define the variables we DO NOT want to include (with -). The function will assume we want to gather the rest of variables.
+
+* (C) Define the variables with the helpers functions
+
+```{r, results="hide"}
+    gather(species, CD, n, starts_with('CD'))
+```
+
+ 
+* (D) Define the variables we DO NOT want to include (with -). The function will assume we want to gather the rest of variables.
 
 ```{r,results="hide"}
      gather(species,CD, n,-Codi, -Especie)
