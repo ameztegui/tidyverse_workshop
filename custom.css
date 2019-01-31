@@ -290,3 +290,15 @@ div.tweaked-header {
 .blue {
   color: #19b5fe;
 }
+
+
+.pull-extleft {
+  float: left;
+  width: 35%;
+}
+
+.pull-extleft_right {
+  float: right;
+  font-size: 82%;
+  width: 65%;
+}
