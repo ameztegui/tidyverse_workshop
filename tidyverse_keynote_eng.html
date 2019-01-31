@@ -554,13 +554,13 @@ select(trees, Codi:Dist)
 
 ## Special functions:
 
-- `starts_with`
-- `ends_with`
-- `contains`
-- `match`
-- `num_range`
-- `one_of`
-- `everything`
+- `starts_with(x)`: names that start with x
+- `ends_with(x)`: names that end with x
+- `contains(x)`: selects all variables whose name contains x
+- `matches(x)`: selects all variables whose name contains the regular expression x
+- `num_range("x", 1:5, width = 2)`: selects all variables (numerically) from x01 to x05
+- `one_of ("x", "y", "z")`: selects variables provided in a character vector
+- `everything()`: selects all variables
 
 ---
 
@@ -1319,7 +1319,8 @@ Data is not always organized...
 
 # tidyr
 
-.center[
+that's better!!
+
 
 ```
 ## # A tibble: 35,750 x 5
@@ -1337,7 +1338,37 @@ Data is not always organized...
 ## 10 AD     1996 m     2534          0
 ## # ... with 35,740 more rows
 ```
-]
+
+
+---
+
+# tidyr
+
+
+
+```r
+species
+```
+
+```
+## # A tibble: 14,778 x 15
+## # Groups:   Codi, Especie [14,778]
+##    Codi Especie CD_10 CD_15 CD_20 CD_25 CD_30 CD_35 CD_40 CD_45 CD_50
+##  * &lt;fc&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 080~ 022         0 159.   31.8 111.  60.1   19.2  5.09   0    0   
+##  2 080~ 021         0   0     0     0    0     74.2 28.3   63.7  0   
+##  3 080~ 022         0   0     0   173.  31.8    0    0      0    0   
+##  4 080~ 476         0   0     0     0    0     31.8  0      0    0   
+##  5 080~ 021         0   0     0    31.8  0      0    0      0    5.09
+##  6 080~ 022         0 127.    0     0   46.0  127.   0     14.1  0   
+##  7 080~ 021         0  31.8   0     0   31.8    0    0      0    0   
+##  8 080~ 071         0   0     0    14.1  5.09  31.8  0      0    0   
+##  9 080~ 243         0   0    14.1   0   14.1    0    5.09   0    0   
+## 10 080~ 278         0 286.   31.8   0    0     31.8  0      0    0   
+## # ... with 14,768 more rows, and 4 more variables: CD_55 &lt;dbl&gt;,
+## #   CD_60 &lt;dbl&gt;, CD_65 &lt;dbl&gt;, CD_70 &lt;dbl&gt;
+```
+
 
 ---
 
@@ -1405,6 +1436,8 @@ n_parcelas
 # tidyr
 
 ## `gather`
+
+![](resources/images/gather_key.png)
 
 
 ```r
@@ -1499,6 +1532,9 @@ where each column is a variable and each row an observation
 # tidyr
 
 ## `spread`
+![](resources/images/spread_key.png)
+
+
 
 
 ```r

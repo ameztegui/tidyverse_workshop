@@ -365,13 +365,13 @@ select(trees, Codi:Dist)
 
 ## Special functions:
 
-- `starts_with`
-- `ends_with`
-- `contains`
-- `match`
-- `num_range`
-- `one_of`
-- `everything`
+- `starts_with(x)`: names that start with x
+- `ends_with(x)`: names that end with x
+- `contains(x)`: selects all variables whose name contains x
+- `matches(x)`: selects all variables whose name contains the regular expression x
+- `num_range("x", 1:5, width = 2)`: selects all variables (numerically) from x01 to x05
+- `one_of ("x", "y", "z")`: selects variables provided in a character vector
+- `everything()`: selects all variables
 
 ---
 
@@ -892,14 +892,26 @@ tb
 
 # tidyr
 
-.center[
+that's better!!
+
 ```{r tb2, echo=FALSE}
 tb %>%
   gather(demo, n, -iso2, -year, na.rm = TRUE) %>%
   separate(demo, c("sex", "age_group"), 1) %>%
   arrange(iso2, year, sex)
 ```
-]
+
+
+---
+
+# tidyr
+
+
+```{r cd}
+species
+
+```
+
 
 ---
 
@@ -957,6 +969,8 @@ n_parcelas
 
 ## `gather`
 
+![](resources/images/gather_key.png)
+
 ```{r gather_ex2}
 n_parcelas_tidy <- n_parcelas %>%
   gather(IFN, n, IFN_2, IFN_3)
@@ -1004,6 +1018,9 @@ species
 # tidyr
 
 ## `spread`
+![](resources/images/spread_key.png)
+
+
 
 ```{r spread_ex}
 n_parcelas_tidy %>%
