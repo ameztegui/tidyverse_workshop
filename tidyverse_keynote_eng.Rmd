@@ -45,20 +45,18 @@ layout: true
 <div class="tweaked-header" style="background-image: url(resources/images/tidyverse.png)"></div>
 
 ---
-
-# tidyr, dplyr & purr: the tidyverse
-
---
 background-image: url(resources/images/hadley.png)
 background-position: right bottom
+
+# The tidyverse
+
+The **tidyverse** is a collection of R packages designed for data science, as a suite aimed
+at easening the data analysis in all its steps.
 
 Created by Hadley Wickham, chief scientist of RStudio, and author of more than
 30 R packages (`readr`, `ggplot2`, `plyr`, `devtools`, `roxygen2`, `rmarkdown`...)
 
---
-
-The **tidyverse** is made up of those packages (and others), as a suite designed
-to ease the data analysis in all its steps.
+All packages share an underlying design philosophy, grammar, and data structures. 
 
 --
 
@@ -69,27 +67,18 @@ to ease the data analysis in all its steps.
 background-image: url(resources/images/hadley.png)
 background-position: right bottom
 
-# tidyr, dplyr & purr: the tidyverse
+# The tidyverse
+
+The **tidyverse** is a collection of R packages designed for data science, as a suite aimed
+at easening the data analysis in all its steps.
 
 Created by Hadley Wickham, chief scientist of RStudio, and author of more than
 30 R packages (`readr`, `ggplot2`, `plyr`, `devtools`, `roxygen2`, `rmarkdown`...)
 
-The **tidyverse** is made up of those packages (and others), as a suite designed
-to ease the data analysis in all its steps.
+All packages share an underlying design philosophy, grammar, and data structures. 
 
 ![](resources/images/tidyverse_schema_2.png)
 
----
-
-# Before we start...
-
-- Neither `tidyr`, nor `dplyr` or `purrr` do anything that can't be done with
-  base R code, apply family functions, for-loops or other packages.  
-
-- Designed to be more efficient (in time), easier to read and easier to use. More intuitive to use, specially for beginners (it may requires some adaptation if used to base R code).
-
-- Valid mostly for data.frames. For other formats (matrices, arrays) `plyr` can
-  be used.
 
 ---
 
@@ -104,25 +93,71 @@ to ease the data analysis in all its steps.
     
 ---
 
+# So what's exaclty *in* the tidyverse?
+
+.pull-extleft[![](resources/images/hex-tidyverse.png)]
+
+.pull-extleft_right[
+
+* `ggplot2` a system for creating graphics, based on the Grammar of Graphics
+
+* `readr` a fast and friendly way to read rectangular data (like csv, tsv, etc.).
+
+* `tibble` a tibble is a modern re-imagining of the data frame, keeping what time has proven to be effective, and throwing out what it has not.
+
+* `stringr` provides a cohesive set of functions designed to make working with strings as easy as possible. 
+
+* `forcats` provides a suite of useful tools that solve common problems with factors.
+
+* `dplyr` provides a grammar of data manipulation, providing a consistent set of verbs that solve the most common data manipulation challenges.
+ 
+* `tidyr` provides a set of functions that help you get to tidy data.
+ 
+* `purrr` enhances R’s functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors
+]
+
+---
+
+# Installation and use
+
+
+ - Install all the packages in the tidyverse by running `install.packages("tidyverse")`
+
+ - Run `library(tidyverse)` to load the core tidyverse and make it available in your current R session.
+ - Learn more about the tidyverse package at http://tidyverse.tidyverse.org.
+ - Or check the cheatsheets
+ 
+ ![](resources/images/cheatsheet_purrr.png)
+
+---
+
+# Before we start...
+
+- Neither `tidyr`, nor `dplyr` or `purrr` do anything that can't be done with
+  base R code, `apply` family functions, `for` loops or other packages.  
+
+- Designed to be more efficient (in time), easier to read and easier to use. More intuitive to use, specially for beginners (it may require some adaptation if you are used to base R code).
+
+- Valid mostly for data.frames. For other formats (matrices, arrays) `plyr` can
+  be used.
+
+---
+
+
 # our data
 
   1. `plots [11858 x 15]`: all plots from the Third Spanish Forest Inventory (IFN3) in Catalonia  
-  <br>
-     
+
   2. `trees [111756 x 12]`: all trees with dbh > 7.5 cm measured in both
      IFN2 and IFN3  
-  <br>
-  
+
   3. `species [14778 x 15]`: number of trees per hectare in each plot, by
      species and size class  
-  <br>
-  
+
   4. `coordinates [11858 x 6]`: X and Y UTM coordinates of each plot.  
-  <br>
-  
+
   5. `leaf [10447 x 3]`: leaf biomass and carbon content for those IFN 3 plots where they
-    where available  
-  <br>
+    were available  
 
 ---
 
@@ -142,6 +177,30 @@ trees
 
 # let's have a look at the data
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+options(width = 70)
+```
+
+```{r plots, }
+plots
+```
+
+---
+
+# let's have a look at the data
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+options(width = 70)
+```
+
+```{r species, }
+species
+```
+
+
+---
+# let's have a look at the data
+
 ```{r tibbles_class, }
 class(trees)
 ```
@@ -156,6 +215,13 @@ Tibbles, not usual data.frames:
   
   - Besides that, it is like a data.frame
   (it *is* a data.frame)
+
+---
+# let's have a look at the data
+
+```{r tibbles_glimpse, }
+glimpse(trees)
+```
 
 ---
 layout: false
@@ -321,7 +387,7 @@ select(trees, starts_with('Diam'))
 
 ## Exercise 2
 
-Think if three or four ways to select the variables that define the start and finish date
+Think of three or four ways to select the variables that define the start and finish date
 of plot measuring
 
 ---
