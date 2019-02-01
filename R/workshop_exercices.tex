@@ -1,0 +1,1387 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Introduction to the tidyverse: dplyr, tidyr and purrr},
+            pdfauthor={Aitor Ameztegui, Víctor Granda},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Introduction to the tidyverse: \texttt{dplyr}, \texttt{tidyr} and
+\texttt{purrr}}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Aitor Ameztegui, Víctor Granda}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{February 2019}
+
+
+\begin{document}
+\maketitle
+
+\newpage
+
+\section{Introduction}\label{introduction}
+
+Thi is a \texttt{RMarkdown} document generated to illustrate the
+exercices suggested as part of the Workshop ``Introduction to the
+tidyverse'', that will be celebrated in Barcelona within the 1st Meeting
+of the Iberian Ecological Society and the XIV AEET Meeting. All the code
+and the data needed to produce this document can be found in GitHub
+(\url{https://github.com/ameztegui/dplyr_workshop}). For any doubt about
+the exercises, you can contact Aitor Ameztegui
+(\url{ameztegui@gmail.com}) or V?ctor Granda
+(\url{ameztegui@gmail.com}).
+
+The packages\texttt{tidyr}, \texttt{dplyr}, and \texttt{purrr} are part
+of a set of packages known as the
+\href{https://cran.r-project.org/web/packages/tidyverse/index.html}{\texttt{tidyverse}},
+created by \href{https://github.com/hadley}{Hadley Wickham}, Chief
+Scientist in RStudio. The \texttt{tidyverse} was created to easen data
+analysis and data management. It consists on packages to import and read
+data, to organize and modify them, to analyze and model them and to
+visualize them. In this seminar we will focus on \texttt{tidyr},
+conceived to help organize data, and \texttt{dplyr}, that focuses on
+data transformation. We must firs install these packages (if we haven't
+done it yet). To install all the packages from the \texttt{tidyverse} at
+once we need to write \texttt{install.packages("tidyverse")}. Then we
+need to load the packages by typing:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+We also need to load the dataset we will use for this workshop, we can
+download them from
+\href{https://github.com/ameztegui/dplyr_workshop}{GitHub}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{load}\NormalTok{(}\StringTok{"../data/data_workshop.Rdata"}\NormalTok{)}
+
+\NormalTok{trees <-}\StringTok{ }\KeywordTok{tbl_df}\NormalTok{(trees)}
+\NormalTok{plots <-}\StringTok{ }\KeywordTok{tbl_df}\NormalTok{(plots)}
+\NormalTok{species <-}\StringTok{ }\KeywordTok{tbl_df}\NormalTok{(species)}
+\NormalTok{coordinates <-}\StringTok{ }\KeywordTok{tbl_df}\NormalTok{(coordinates)}
+\end{Highlighting}
+\end{Shaded}
+
+Through the function \texttt{tbl\_df} we will convert normal data frames
+into \emph{tibbles}. A \emph{tibble} is just a data frame with some
+particularities: for example, they only print the first 10 rows by
+default (instead of the whole data frame), and printing them provides
+information on all the variables and their class. Besides that, we can
+treat tibbles as normal data frames, because they behave like them at
+all effects.
+
+In these exercises we will use four data frames with information from
+the 2nd and 3rd Spanish National Forest Inventory (IFN2 e IFN3) in
+Catalonia. The data frames are:
+
+\begin{itemize}
+\item
+  \textbf{plots} {[}11,858 x 15{]}: all the IFN3 plots in Catalonia,
+  with info about the date and time of measurement, soil texture and
+  soil pH, total canopy cover and tree canopy cover, etc.
+\item
+  \textbf{trees} {[}111,756 x 12{]}: contains all the adult trees (diam
+  \textgreater{} 7.5 cm) measured both in IFN2 and IFN3. Contains info
+  about the plot, the species, diameter class, diameter measured at IFN2
+  and IFN3\ldots{}
+\item
+  \textbf{species} {[}14,778 x 15{]}: contains the number of trees/ha
+  per species and diameter class.
+\item
+  \textbf{coordinates} {[}11,858 x 6{]}: contains the X \& Y coordinates
+  of each IFN3 plot.
+\end{itemize}
+
+First thing to do is to have a look at the data, to get familiar with
+the data they contain. We will use the function \texttt{glimpse} for
+that.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{glimpse}\NormalTok{(plots)}
+\KeywordTok{glimpse}\NormalTok{(trees)}
+\KeywordTok{glimpse}\NormalTok{(species)}
+\KeywordTok{glimpse}\NormalTok{(coordinates)}
+\end{Highlighting}
+\end{Shaded}
+
+\newpage
+
+\newpage
+
+\section{\texorpdfstring{\texttt{dplyr}: transforming data
+frames}{dplyr: transforming data frames}}\label{dplyr-transforming-data-frames}
+
+\texttt{dplyr} can be used to transform our data frames in the way we
+need it in each case: we can create bew variables, select those of
+interest, execute filters, etc. The \texttt{dplyr} package contains 5
+main verbs:
+
+\begin{itemize}
+\item
+  \texttt{filter} selects rows based on a given set of conditions
+\item
+  \texttt{select} select columns based on their name
+\item
+  \texttt{arrange} sort the data frame based on one or several variables
+\item
+  \texttt{mutate} create new variables
+\item
+  \texttt{summarise} create new variables that summarize values of an
+  existuing variable (mean, sum, etc.)
+\end{itemize}
+
+All of them have a similar structure: the first argument in the function
+is the \texttt{data\ frame} to which it will be applied, and the rest of
+arguments specify what to do with this \texttt{data\ frame}, depending
+on the \texttt{verb}we are using.
+
+\subsection{\texorpdfstring{\texttt{filter}}{filter}}\label{filter}
+
+\texttt{filter} selects those rows of a data frame that accomplish a
+certain criterion. The first argument is the data frame, and the rest
+are the criteria, that can be specified in chain, separated by commas.
+
+\subsubsection{Exercice 1}\label{exercice-1}
+
+To practice with \texttt{filter} let's try to find those plots of IFN
+that:
+
+\begin{itemize}
+\tightlist
+\item
+  1.1 Are located in Barcelona (08) or Girona (17). We have two options:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Option 1}
+    \KeywordTok{filter}\NormalTok{ (plots, Provincia }\OperatorTok{==}\StringTok{"08"} \OperatorTok{|}\StringTok{ }\NormalTok{Provincia }\OperatorTok{==}\StringTok{"17"}\NormalTok{)}
+\CommentTok{# Option 2}
+    \KeywordTok{filter}\NormalTok{ (plots, Provincia }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"08"}\NormalTok{, }\StringTok{"17"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+We see that both options produce exactly the same result. But the next
+option wouldn't be valid, since we need to specify explicitly the
+variable every time we add a new condition:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{filter}\NormalTok{(plots, Provincia }\OperatorTok{==}\StringTok{"08"} \OperatorTok{|}\StringTok{ "17"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  1.2 plots that were measured completely in January 2001
+\end{itemize}
+
+To do this we need to find the plots for which the completion date is
+later than 31 December 2000 and earlier than 1 February 2001. We can do
+this in two ways: the first one is to use the \texttt{\&} operator to
+indicate we want to get the rows that meet both criteria. The second
+options would be simply to concatenate both criteria with a comma, since
+\texttt{filter} assumes all of them must be met.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \CommentTok{# Option 1}
+    \KeywordTok{filter}\NormalTok{ (plots, FechaFin }\OperatorTok{<}\StringTok{ "2001-02-01"} \OperatorTok{&}\StringTok{ }\NormalTok{FechaFin }\OperatorTok{>}\StringTok{ "2000-12-31"}\NormalTok{)}
+
+    \CommentTok{# Option 2}
+    \KeywordTok{filter}\NormalTok{ (plots, FechaFin }\OperatorTok{<}\StringTok{ "2001-02-01"}\NormalTok{, FechaFin }\OperatorTok{>}\StringTok{ "2000-12-31"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  1.3 Those plots that took more than 2 hours to be measured (7200 seg)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \KeywordTok{filter}\NormalTok{(plots, (HoraFin }\OperatorTok{-}\StringTok{ }\NormalTok{HoraIni) }\OperatorTok{>}\DecValTok{7200}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+As we see, we can do operations within \texttt{filter} conditions. In
+this case, we want that the difference between EndDate and StartDate be
+\textless{} 7200 s (2 hours).
+
+\subsection{\texorpdfstring{\texttt{select}}{select}}\label{select}
+
+\texttt{select} allows to retain only some columns, based on their name.
+To help us find the columns, there are some specific functions such as
+\texttt{starts\_with} or \texttt{contains}, that only work within
+\texttt{select}. We can see the list of special functions by typing
+\texttt{help("select")}
+
+\subsubsection{Exercise 2}\label{exercise-2}
+
+To practice with \texttt{select} let's try to find 4 different ways of
+selecting the variables that specify the starting and ending date of
+measurement of the plots (FechaIni y FechaFin)
+
+\begin{itemize}
+\tightlist
+\item
+  For example, we could specifiy the name of the columns we want to keep
+  in an explicit way
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{select}\NormalTok{(plots, FechaIni, FechaFin)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  We can also specify them as a range, so that all columns between the
+  two indicated will be selected
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{select}\NormalTok{(plots, FechaIni}\OperatorTok{:}\NormalTok{FechaFin)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Or we could select all the columns that contain the text `fecha'. In
+  this case, since we are not interested in the pH measurement date, we
+  can decide to delete it from our selection:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{select}\NormalTok{(plots, }\KeywordTok{contains}\NormalTok{ (}\StringTok{"Fecha"}\NormalTok{),}\OperatorTok{-}\NormalTok{FechaPh)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  At last, we could also select all the variables that start with
+  `fecha' (in this case we also need to eliminate FechaPh):
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{select}\NormalTok{(plots, }\KeywordTok{starts_with}\NormalTok{(}\StringTok{"Fecha"}\NormalTok{), }\OperatorTok{-}\NormalTok{FechaPh)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{\texttt{arrange}}{arrange}}\label{arrange}
+
+\texttt{arrange} sorts the data frame based on the values of ine or more
+variables (columns). The first argument will be, as usual, the data
+frame we want to sort, and then we must specify the variables that
+determine the ordering. If we specify more than 1 variable, the
+succesive variables will be used to decide order when there are ties
+(i.e.~secondary sorting variables). We can also use `desc(x)' to sort in
+decreasing order. Let's try with a few exercises:
+
+\subsubsection{Exercise 3}\label{exercise-3}
+
+\begin{itemize}
+\tightlist
+\item
+  Ex.3.1 Sort the plots by measurement date and time
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{arrange}\NormalTok{(plots, FechaFin, HoraFin)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Ex. 3.2 Which plots were started to be measured later in the day?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{arrange}\NormalTok{(plots,}\KeywordTok{desc}\NormalTok{(HoraIni))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Ex. 3.3 Which took longer to be measured?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{arrange}\NormalTok{(plots, }\KeywordTok{desc}\NormalTok{(HoraFin}\OperatorTok{-}\NormalTok{HoraIni))}
+\end{Highlighting}
+\end{Shaded}
+
+We see that, as it happens with \texttt{filter}, we can also sort data
+frames based on the result of an arithmetic operation.
+
+\subsection{\texorpdfstring{\texttt{mutate}}{mutate}}\label{mutate}
+
+\texttt{mutate} allows us to create new variables with a certain value
+or as combination of existing variables. We just need to specify the
+data frame, and indicate the new variables name and its value. Let's see
+some examples:
+
+\subsubsection{Exercise 4}\label{exercise-4}
+
+Let's create two new variables:
+
+\begin{itemize}
+\tightlist
+\item
+  Ex.4.1 A variable with individual tree growth (in cm) between IFN2 and
+  IFN3.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trees <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{ (trees, }\DataTypeTok{growth=}\NormalTok{ DiamIf3 }\OperatorTok{-}\StringTok{ }\NormalTok{DiamIf2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Ex.4.2 Create two new variables with the basal area per hectare that
+  each tree represents, both in IFN2 and IFN3. Which species was the
+  fastest growing tree in basal area?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trees <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{(trees, }\DataTypeTok{BAIf2=}\NormalTok{ (((pi}\OperatorTok{/}\DecValTok{4}\NormalTok{)}\OperatorTok{*}\NormalTok{(DiamIf2}\OperatorTok{/}\DecValTok{100}\NormalTok{)}\OperatorTok{^}\DecValTok{2}\NormalTok{)}\OperatorTok{*}\NormalTok{N),}
+                \DataTypeTok{BAIf3=}\NormalTok{ (((pi}\OperatorTok{/}\DecValTok{4}\NormalTok{)}\OperatorTok{*}\NormalTok{(DiamIf3}\OperatorTok{/}\DecValTok{100}\NormalTok{)}\OperatorTok{^}\DecValTok{2}\NormalTok{)}\OperatorTok{*}\NormalTok{N),}
+                \DataTypeTok{BA_growth =}\NormalTok{ BAIf3 }\OperatorTok{-}\StringTok{ }\NormalTok{BAIf2)}
+
+\KeywordTok{arrange}\NormalTok{(trees, }\KeywordTok{desc}\NormalTok{(BA_growth))}
+\end{Highlighting}
+\end{Shaded}
+
+As we see, we can calculate new variables based on the variables we just
+created. Also, we can combine \texttt{mutate} and \texttt{arrange} to
+know which is the fastest growing tree.
+
+\subsection{\texorpdfstring{\texttt{summarise}}{summarise}}\label{summarise}
+
+\texttt{summarise} allows us to make calculations with the variables in
+the data frame, but using \emph{summary functions}, that transform the
+variability in a given variable into a single value. Functions such as
+\texttt{sum}, \texttt{mean}, \texttt{max},\texttt{IQR}, etc. are
+examples of summary functions. However, this function by itself often
+lacks any interest, cause it would reduce all the data frame to a single
+value. It is commonly used together with \texttt{group\_by}, that
+classifies the data frame in groups based on a categorical variable.
+
+To use \texttt{group\_by} we just need to indicate the data frame and
+the variable we want to group it by. To be more efficient,
+\texttt{dplyr} does not create a copy of the data frame, but it creates
+a hidden variable that indexes the groups, so that when we ask it to
+perform operations by group, it know to which group belongs each
+observation.
+
+In the case of our data frame \texttt{trees}, there are several groups
+that could be of interest el caso de nuestra base de datos de pies
+trees, hay varios grupos que pueden tener inter?s:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Por provincia}
+\NormalTok{by_province <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{ (trees, Provincia)}
+
+\CommentTok{# Por parcela}
+\NormalTok{by_plot <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{ (trees, Codi)}
+
+\CommentTok{# Por especie}
+\NormalTok{by_species <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{ (trees, Especie)}
+
+\CommentTok{#Por clase diam?trica}
+\NormalTok{by_CD <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{ (trees, CD)}
+
+\CommentTok{#Por parcela y especie}
+\NormalTok{by_plot_species <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{ (trees, Codi, Especie)}
+\end{Highlighting}
+\end{Shaded}
+
+We can see, by typing \texttt{glimpse(by\_plot)} that the resulting data
+frame is not different at all from the original, at least apparently.
+However, if we type \texttt{class(by\_plot)} we see it has now a new
+class \texttt{grouped\_df}.
+
+\subsubsection{Exercise 5}\label{exercise-5}
+
+What statistics could be of interest to characterize the diameter values
+of each plot? We can, for example, calculate te mean, minimum and
+maximum value, percentile 0.9 and interquartile range for each plot. We
+can also compute the number of trees measured in each plot and the
+number of different species, using the functions \texttt{n()} y
+\texttt{n\_distinct(x)}. In this case, the resulting data frame will
+have less rows, one per plot, and will only contain the new variables
+created.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summarise}\NormalTok{(by_plot,}
+          \DataTypeTok{media =} \KeywordTok{mean}\NormalTok{(DiamIf3),}
+          \DataTypeTok{min =} \KeywordTok{min}\NormalTok{ (DiamIf3),}
+          \DataTypeTok{max =} \KeywordTok{max}\NormalTok{(DiamIf3),}
+          \DataTypeTok{q90 =} \KeywordTok{quantile}\NormalTok{(DiamIf3, }\FloatTok{0.9}\NormalTok{),}
+          \DataTypeTok{IQ =} \KeywordTok{IQR}\NormalTok{(DiamIf3),}
+          \DataTypeTok{n =}\KeywordTok{n}\NormalTok{(),}
+          \DataTypeTok{sps =} \KeywordTok{n_distinct}\NormalTok{(Especie) )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 7,713 x 8
+##    Codi   media   min   max   q90    IQ     n   sps
+##    <fct>  <dbl> <dbl> <dbl> <dbl> <dbl> <int> <int>
+##  1 080001  26.3  13.4  38    34.4  4.15    15     1
+##  2 080002  35.2  24.8  44.4  43.0 10.2     13     3
+##  3 080003  32.0  14.2  51    46.1 12.2      7     2
+##  4 080004  24.3  16.8  31.7  30.2  7.42     2     1
+##  5 080005  28.4  16.2  59.8  39.7 15.3     12     3
+##  6 080006  35.9  14    55.9  52.3 17.9     23     2
+##  7 080007  30.8  15.2  63.6  49.4 12.3     35     2
+##  8 080008  16.0   9    21.4  17.8  2.05    11     1
+##  9 080009  16.7   9    36.0  24    3.88    16     2
+## 10 080010  31.6   9.2  95.5  61.5 18.2     13     3
+## # ... with 7,703 more rows
+\end{verbatim}
+
+\newpage
+
+\section{\texorpdfstring{Pipelines
+(\texttt{\%\textgreater{}\%})}{Pipelines (\%\textgreater{}\%)}}\label{pipelines}
+
+We will often use several \texttt{dplyr} verbs together, creating nested
+functions. However, when we need to perform several operations, these
+nested functions can easily get complex and difficult to understand. For
+example, by having a look at this code, would you be able to say what it
+will do?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diam_medio_especie <-}\StringTok{ }\KeywordTok{filter}\NormalTok{(}
+    \KeywordTok{summarise}\NormalTok{(}
+        \KeywordTok{group_by}\NormalTok{(}
+            \KeywordTok{filter}\NormalTok{(}
+\NormalTok{                trees,}
+                \OperatorTok{!}\KeywordTok{is.na}\NormalTok{(DiamIf3)}
+\NormalTok{            ),}
+\NormalTok{        Codi, Especie}
+\NormalTok{        ),}
+    \DataTypeTok{diam =} \KeywordTok{mean}\NormalTok{ (DiamIf3),}
+    \DataTypeTok{n =} \KeywordTok{n}\NormalTok{()}
+\NormalTok{    ),}
+\NormalTok{n }\OperatorTok{>}\StringTok{ }\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The code gets those observations, from the data frame \texttt{trees},
+that have a value of diameter (\texttt{!is.na(DiamIf3)}), it then groups
+them by plot and species (\texttt{group\_by(Codi,\ Especie)}),
+calculates for each combination the mean diameter
+(\texttt{diam\ =\ mean\ (DiamIf3)}), and the number of trees per plot
+(\texttt{n\ =\ n()}), and finally selects only those cases in which
+there are at least 5 trees (\texttt{filter\ (n\textgreater{}5)}).
+
+Although this syntaxis is not operationally complex, it is hard to
+understand. Often a solution is to save each step as a different data
+frame, but this is an important source of errors.
+
+We can however simplify this code using the \emph{pipe} operator
+(\texttt{\%\textgreater{}\%}) from the \texttt{magrittr} package, which
+is installed and loaded with \texttt{tidyr} and \texttt{dplyr}. When we
+use \texttt{\%\textgreater{}\%}, the result of the left side is
+processed by the righ side function as first argument. In the case of
+\texttt{dplyr} and \texttt{tidyr}, since the first argument is always a
+data frame, \texttt{\%\textgreater{}\%} makes that a function be applied
+to the data frame resulting from the previous function. Thus, we can
+express \texttt{filter\ (df,\ color\ =="blue)} as
+\texttt{df\ \%\textgreater{}\%\ filter(color\ ==\ "blue")}. This allows
+to concatenate several functions in a logical and understandable way, so
+that the operator \texttt{\%\textgreater{}\%} could be read as
+\emph{then}. Let's see how this would be in the previous function
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diam_medio_especie <-}\StringTok{ }\NormalTok{trees }\OperatorTok{%>%}\StringTok{             }\CommentTok{# take the df 'trees' and THEN}
+\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(DiamIf3)) }\OperatorTok{%>%}\StringTok{                 }\CommentTok{# eliminate NA values and THEN}
+\KeywordTok{group_by}\NormalTok{(Codi, Especie) }\OperatorTok{%>%}\StringTok{                 }\CommentTok{# group y plot and species and THEN}
+\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{diam=}\KeywordTok{mean}\NormalTok{(DiamIf3), }\DataTypeTok{n =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}\StringTok{  }\CommentTok{# calculate mean and number of trees and THEN}
+\KeywordTok{filter}\NormalTok{(n }\OperatorTok{>}\StringTok{ }\DecValTok{5}\NormalTok{)                               }\CommentTok{# filter those with n> 5}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Exercise 6}\label{exercise-6}
+
+Let's do some exercises. Using the pipe operator, let's create pipelines
+to solve the next exercises:
+
+\begin{itemize}
+\tightlist
+\item
+  Ex.6.1 Which plots have the greatest average growth between IFN2 and
+  IFN3?
+\end{itemize}
+
+We first define the data frame we will work with. \emph{THEN}
+(\texttt{\%\textgreater{}\%}) we create a new variable with the growth
+of each tree, \emph{THEN} we group by plot, \emph{THEN} we calculate,
+for each plot, the mean growth, and \emph{THEN} we arrange the results
+in decreasing order. The resulting code would be:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trees }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{growth=}\NormalTok{DiamIf3}\OperatorTok{-}\NormalTok{DiamIf2) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(Codi) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{av_growth=}\KeywordTok{mean}\NormalTok{(growth), }\DataTypeTok{n=}\KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(av_growth))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 7,713 x 3
+##    Codi   av_growth     n
+##    <fct>      <dbl> <int>
+##  1 171089      23.1     3
+##  2 170819      21.6     1
+##  3 172607      17.6     6
+##  4 172216      17.4     6
+##  5 172690      16.0    17
+##  6 171682      15.4     6
+##  7 083267      15.3     1
+##  8 431363      15.1     4
+##  9 171664      14.8     5
+## 10 171976      14.4     1
+## # ... with 7,703 more rows
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Ex.6.2 Which is the plot with highest species richness?
+\end{itemize}
+
+First, we define thedata frame (\texttt{trees}), \emph{THEN} we group by
+Code, \emph{THEN} we determine the number of species per plot and
+\emph{THEN} we arrange in decreasing order:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trees }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(Codi) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarise}\NormalTok{ (}\DataTypeTok{n_species=}\KeywordTok{n_distinct}\NormalTok{(Especie)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(n_species))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 7,713 x 2
+##    Codi   n_species
+##    <fct>      <int>
+##  1 170195         9
+##  2 171036         9
+##  3 170218         8
+##  4 170121         7
+##  5 170596         7
+##  6 170635         7
+##  7 170799         7
+##  8 171398         7
+##  9 171481         7
+## 10 172650         7
+## # ... with 7,703 more rows
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Ex.6.3 Are both variables (species richness and average growth)
+  related?
+\end{itemize}
+
+First, we would need to indicate the data frame we will work with,
+\emph{THEN} we will group by plot, \emph{THEN} we will calculate the
+variables. To see the relationship between both variables, we will
+create a plot with \texttt{ggplot2}, just to show how all the packages
+in the tidyverse relate to each other. The aim of this workshop is not
+to learn \texttt{ggplot2}, so we won't go into further details. To know
+more about ggplot you can visit this website: \url{http://ggplot2.org/}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trees }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{growth=}\NormalTok{DiamIf3}\OperatorTok{-}\NormalTok{DiamIf2) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(Codi) }\OperatorTok{%>%}
+\StringTok{        }\KeywordTok{summarise}\NormalTok{ (}\DataTypeTok{n_species=}\KeywordTok{n_distinct}\NormalTok{(Especie),}
+                   \DataTypeTok{av_growth=}\KeywordTok{mean}\NormalTok{(growth)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(n_species, av_growth)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{workshop_exercices_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+Here we see one of the advantages of the \texttt{tidyverse}, the fact
+that all the packages and functions can communicate one with another. In
+this way, we just created a plot without the need of creating
+intermediate objects or data frames, starting directly from the raw data
+frame, and chianing orders in a logical and intuitive way.
+
+\section{Grouped mutate/grouped
+filter}\label{grouped-mutategrouped-filter}
+
+Most of the times we use \texttt{group\_by}, we will do it with the
+\emph{summary functions}, that is, functions that take n values as
+input, and give back 1 value as output. Examples of \emph{summary
+functions} are \texttt{mean()}, \texttt{sd()}, \texttt{min()},
+\texttt{sum()}, etc.
+
+However, some times we will need to do some operation by group, but we
+will need to produce one output per input, that is n inputs
+--\textgreater{} n outputs. This can be done using \texttt{mutate} or
+\texttt{filter} in combination with \texttt{group\_by}.
+
+\subsubsection{Exercise 7}\label{exercise-7}
+
+Taking this into account, let's try to:
+
+\begin{itemize}
+\tightlist
+\item
+  Ex.7.1 Identify those trees that grow much faster than the average of
+  the plot
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trees }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{growth=}\NormalTok{DiamIf3}\OperatorTok{-}\NormalTok{DiamIf2) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(Codi) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{plot_mean=} \KeywordTok{mean}\NormalTok{(growth),}
+           \DataTypeTok{des =}\NormalTok{ (growth }\OperatorTok{-}\StringTok{ }\NormalTok{plot_mean)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(des))}
+\end{Highlighting}
+\end{Shaded}
+
+In the previous code we see we first calculate the growth of each tree,
+and after grouping by plot, we calculate a new variable, where the plot
+average is substracted from the growth of each tree, and the result is
+divided by the standard deviation of the plot. We calculate in this way
+the standardized growth of each tree with respect to the plot, making it
+easy to identify those trees that grow suspiciously more than the
+average for their plot.
+
+\begin{itemize}
+\tightlist
+\item
+  Ex. 7.2 Identify those plots where a species grows much more than the
+  average for the species
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trees }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{growth=}\NormalTok{DiamIf3}\OperatorTok{-}\NormalTok{DiamIf2) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(Especie) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{growth_sp =} \KeywordTok{mean}\NormalTok{(growth)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(Codi, Especie) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{growth_sp_plot =} \KeywordTok{mean}\NormalTok{(growth),}
+           \DataTypeTok{inc =}\NormalTok{ (growth_sp_plot }\OperatorTok{/}\NormalTok{growth_sp))}\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(inc))}
+\end{Highlighting}
+\end{Shaded}
+
+As we did before, we first calculate the growth of eaxh tree, we then
+group by species, so that we can calculate the mean growth for each
+species (\texttt{growth\_sp}). Finally, we group again, now for plot and
+species, to calculate the mean growth of each species on each plot
+(\texttt{growth\_sp\_plot}). Once we have this, we can calculate the
+ratio between the two variables, identifying those plots where the
+species is performing better )assuming no mistakes, of course).
+
+Let's see one last example:
+
+*Ex.7.3 Select those species of the IFN3 occupied by ``pure'' Pinus
+nigra stands (Especie = 025)
+
+Note: a forest is considered as pure stand if more than 80\% of their
+Basal Area corresponds to a single species. Let's see how we would do
+that:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trees }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(Codi,Especie) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{BA_sp=} \KeywordTok{sum}\NormalTok{(BAIf3)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(Codi) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{BA_tot =} \KeywordTok{sum}\NormalTok{(BA_sp),}
+           \DataTypeTok{ratio=}\NormalTok{ BA_sp}\OperatorTok{/}\NormalTok{BA_tot) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(Especie}\OperatorTok{==}\StringTok{"025"}\NormalTok{, ratio }\OperatorTok{>}\FloatTok{0.8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 648 x 5
+## # Groups:   Codi [648]
+##    Codi   Especie BA_sp BA_tot ratio
+##    <fct>  <fct>   <dbl>  <dbl> <dbl>
+##  1 080132 025     41.4   49.9  0.830
+##  2 080307 025     51.2   54.8  0.933
+##  3 080313 025     28.1   35.0  0.804
+##  4 080318 025     23.7   26.6  0.894
+##  5 080322 025     29.7   32.3  0.919
+##  6 080323 025      1.61   1.61 1    
+##  7 080324 025     18.2   19.7  0.924
+##  8 080325 025     43.8   44.6  0.982
+##  9 080326 025      6.01   6.01 1    
+## 10 080328 025     62.1   65.7  0.945
+## # ... with 638 more rows
+\end{verbatim}
+
+In this case, we first calculate BA per plot, using \texttt{summarise}.
+We then calculate the sum of BA per plot, but in this case we use
+\texttt{mutate}, because we don't want to aggregate tge data by plot,
+but calculate them separately for each plot but keeping the rest of the
+data as it was. Once we have both values, we can filter to select those
+plots with Pinus nigra, in which percenrage of basal area for that
+species be \textgreater{} 80\%. \newpage
+
+\newpage
+
+\section{Joins: working with to
+tables}\label{joins-working-with-to-tables}
+
+Very often, the information we will work with more than a table. The
+\emph{join} functions will allow us to work with several data frames,
+joining them in different ways. Within \texttt{dplyr} there are two
+types of joins:
+
+\subsection{Mutating joins}\label{mutating-joins}
+
+They add the columns of a data frame to the other, depending on whether
+they share some observations or not. There are four types.
+
+\begin{itemize}
+\item
+  \texttt{left\_join(x,\ y)} adds the columns of \texttt{y} to the
+  observations of \texttt{x} that are also in \texttt{y}. Those that are
+  not present in y will receive the value \texttt{NA}. With this
+  function we ensure that we will not lose any observation.
+\item
+  \texttt{right\_join(x,\ y)} adds the columns of \texttt{x} to those
+  observations in \texttt{y} that are also in \texttt{x}. Those that are
+  not present will receive \texttt{NA}. It is equivalent to
+  \texttt{left\_join}, but the columns will be ordered differently.
+\item
+  \texttt{full\_join(x,y)} includes all observations in \texttt{x} and
+  \texttt{y}. If they do not coincide, they assign \texttt{NA}.
+\item
+  \texttt{inner\_join(x,\ y)} includes only those observations both in
+  \texttt{x} and \texttt{y} (repeats rows if it is necessary).
+\end{itemize}
+
+\subsection{Filtering joins}\label{filtering-joins}
+
+The second type of joins are the \textbf{filtering joins}, that affect
+only to the observation, not to the variables. That is, they never add
+new columns, but they keep or delete the rows of the original frame as a
+function of their correspondence or not with a second data frame. There
+are only two types:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{semi\_join(x,\ y)} \emph{keeps} the observations in \texttt{x}
+  that match observations in \texttt{y}.
+\item
+  \texttt{anti\_join(x,\ y)} \emph{deletes} the observations in
+  \texttt{x} that match observations in \texttt{y}.
+\end{itemize}
+
+You can find more information about the join functions typing
+\texttt{vignette("two-table")}.
+
+\subsubsection{Exercise 8}\label{exercise-8}
+
+To try the join functions, let's add the geographic information (X \& Y
+coordinates), contained in the data frame \texttt{coordinates} to the
+data frame \texttt{plots}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{left_join}\NormalTok{(plots,coordinates, }\StringTok{"Codi"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+In this case, since we want to keep all the plots in the original
+\texttt{plots}data frame, we use \texttt{left\_join}. In this case,
+since the number of observations in \texttt{coordinates} and
+\texttt{plots} is the same, the function \texttt{inner\_join} should
+give us the same results.
+
+Now we added the coordinates, we can represent in a map any variable in
+the data frame. We could, for example, represent the values of tree
+canopy cover (FccArb). We need to load the package ``maps''. (If we
+don't have it installed, we can install it typing in the console
+\texttt{install.packages("maps")}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(maps)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'maps'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     map
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{left_join}\NormalTok{(plots,coordinates, }\StringTok{"Codi"}\NormalTok{) }\OperatorTok{%>%}
+\KeywordTok{ggplot}\NormalTok{( }\KeywordTok{aes}\NormalTok{(CoorX, CoorY)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color=}\NormalTok{FccArb), }\DataTypeTok{size=}\FloatTok{0.3}\NormalTok{, }\DataTypeTok{alpha=}\FloatTok{0.6}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_color_continuous}\NormalTok{(}\DataTypeTok{low=} \StringTok{"white"}\NormalTok{, }\DataTypeTok{high=}\StringTok{"dark green"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{workshop_exercices_files/figure-latex/Ex.8b: joins (cont)-1.pdf}
+
+Once again, we see we don't even need to create a new data frame with
+the new information, we can chain the functions in \texttt{dplyr} and
+\texttt{ggplot2}, producing the results in a very easy and fast way.
+
+\newpage
+
+\section{\texorpdfstring{\texttt{tidyr}: changing the shape of the data
+frames}{tidyr: changing the shape of the data frames}}\label{tidyr-changing-the-shape-of-the-data-frames}
+
+One of the main ideas behind the
+\href{https://cran.r-project.org/web/packages/tidyverse/index.html}{\texttt{tidyverse}}
+is the concept of \emph{tidy data}, that we have introduced before.
+According to Hadley Wickham, we can say that our data are tidy when two
+conditions are met:
+
+\begin{itemize}
+\item
+  Each column corresponds to a variable
+\item
+  Each row is a different observation
+\end{itemize}
+
+Of course, the data are not always organized in this way, sometimes
+other formats are more efficient (for example, for gathering data). For
+instance, if we have a look at the table \texttt{species}we will see
+that the number of trees for the different size classes are in different
+columns. This format is more convenient for entering the data or for
+some kinds of analyses, but in general the \emph{tidy} format easens the
+processing and analysis, specially in vectorized languages such as
+\texttt{R}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# View(species)}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{tidyr} package allows to change the way in which data are
+organized, so that we can arrange them in the way we need to our
+analysis. It has four basic verbs:
+
+\begin{itemize}
+\item
+  \texttt{gather} aggregates variables that are in several columns and
+  converts them into two variables: a factor (\emph{key}) and a numeric
+  variablea (\emph{value}).
+\item
+  \texttt{spread} is the inverse of gather, it takes the levels of a
+  factor and a numeric variable and creates a new variable for each
+  level of the factor.
+\item
+  \texttt{separate} divides the content of a column into several columns
+\item
+  \texttt{unite} inverse of separate, concatenates the values of several
+  columns
+\end{itemize}
+
+\subsection{\texorpdfstring{\texttt{gather} \&
+\texttt{separate}}{gather \& separate}}\label{gather-separate}
+
+\texttt{gather} transforms data in \emph{wide} format into \emph{long}
+format. \texttt{gather} takes a series of columns and transforms them
+into two variables: a factor (\emph{key}) and a numeric variable
+(\emph{value}). The first parameter in \texttt{gather} is the data
+frame, the second and third are the names we will give to \emph{key} and
+\emph{value}, and the rest are the variables to group.
+
+\subsubsection{Exercise 9}\label{exercise-9}
+
+Let's use \texttt{gather} and \texttt{separate} to transform the data
+frame \texttt{species} into a \emph{tidy} format, where each column is a
+variable and each row, an observation. First, let's have a look at the
+data frame we want to transform:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{glimpse}\NormalTok{(species)}
+\end{Highlighting}
+\end{Shaded}
+
+To convert it into the `long' format we specify the data frame, then the
+new factor to create (\emph{key}), and the numeric variable
+(\emph{value}), and last, the columns to aggregate. For the last part we
+have three equivalent options:
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\Alph{enumi})}
+  \tightlist
+  \item
+    Explicitly define the variables we want to gather:
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \KeywordTok{gather}\NormalTok{(species, CD, n, CD_}\DecValTok{10}\NormalTok{,CD_}\DecValTok{15}\NormalTok{,CD_}\DecValTok{20}\NormalTok{, CD_}\DecValTok{25}\NormalTok{,CD_}\DecValTok{30}\NormalTok{,}
+\NormalTok{                      CD_}\DecValTok{35}\NormalTok{,CD_}\DecValTok{40}\NormalTok{, CD_}\DecValTok{45}\NormalTok{,CD_}\DecValTok{50}\NormalTok{,CD_}\DecValTok{55}\NormalTok{,CD_}\DecValTok{60}\NormalTok{, CD_}\DecValTok{65}\NormalTok{, CD_}\DecValTok{70}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\Alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Define the interval containing the variables we want to gather
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \KeywordTok{gather}\NormalTok{(species, CD, n, CD_}\DecValTok{10}\OperatorTok{:}\NormalTok{CD_}\DecValTok{70}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\Alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    Define the variables with the helpers functions
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \KeywordTok{gather}\NormalTok{(species, CD, n, }\KeywordTok{starts_with}\NormalTok{(}\StringTok{'CD'}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\Alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    Define the variables we DO NOT want to include (with -). The
+    function will assume we want to gather the rest of variables.
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+     \KeywordTok{gather}\NormalTok{(species,CD, n,}\OperatorTok{-}\NormalTok{Codi, }\OperatorTok{-}\NormalTok{Especie)}
+\end{Highlighting}
+\end{Shaded}
+
+The three pieces of code above produce the same result. Once we have
+converted the data frame into the new format, we can divide the new
+variable ``CD'' into two new variables, that we will name ``Name'' and
+``CD'', using \texttt{separate}. If we do not specify where to make the
+separation, the function takes by defualt the first non alphanumeric
+character in the string.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    species_long <-}\StringTok{   }\KeywordTok{gather}\NormalTok{(species,CD, n,}\OperatorTok{-}\NormalTok{Codi, }\OperatorTok{-}\NormalTok{Especie)}
+\NormalTok{    species_long<-}\KeywordTok{separate}\NormalTok{(species_long, }\DataTypeTok{col=}\NormalTok{CD, }\DataTypeTok{into =} \KeywordTok{c}\NormalTok{(}\StringTok{"Nombre"}\NormalTok{, }\StringTok{"CD"}\NormalTok{))}
+\NormalTok{    species_long}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{\texttt{spread} \&
+\texttt{unite}}{spread \& unite}}\label{spread-unite}
+
+If we have a data frame in \emph{long} format, we can use
+\texttt{spread} and \texttt{unite} to transform it back into the
+\emph{wide} format. This is what we will do in the next exercise,
+converting back the data frame with species and diameter classes into
+its original format. As with \texttt{gather}, \texttt{spread} takes the
+data frame as the first argument. The secod parameter is the factor we
+will use to create the new columns, and the third parameter is the name
+of the column that contains the values. We can see this with an example:
+
+\subsubsection{Exercise 10}\label{exercise-10}
+
+Use \texttt{unite} and \texttt{spread} to transform back the data to its
+origianl format.
+
+First we create a new variable, that will be useful to create the new
+columns:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{species_unite <-}\StringTok{ }\KeywordTok{unite}\NormalTok{(species_long, CD, Nombre, CD)}
+\end{Highlighting}
+\end{Shaded}
+
+Now we will transform the data frame, specifying the variable that will
+produce the new columns (``CD'') and the variable that contains the
+values (n)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{spread}\NormalTok{(species_unite, CD,n)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Other interesting functionalities of the
+tidyverse}\label{other-interesting-functionalities-of-the-tidyverse}
+
+\subsection{Communication between
+packages}\label{communication-between-packages}
+
+All the packages in the tidyverse are designed to communicate with each
+other. That means that we can combine \texttt{dplyr} and \texttt{tidyr}
+functions, connecting them trhough pipes (\texttt{\%\textgreater{}\%}).
+For example, if we wanted to know which the mean diameter distribution
+of all the pine species we could first filter the species we want to
+study (pines) then transform the data frame, group the data by species
+and diameter class and finally calculate the mean number of trees:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{species }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(Especie }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"021"}\NormalTok{, }\StringTok{"022"}\NormalTok{,}\StringTok{"023"}\NormalTok{, }\StringTok{"024"}\NormalTok{, }\StringTok{"025"}\NormalTok{, }\StringTok{"026"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{gather}\NormalTok{(CD, n, CD_}\DecValTok{10}\OperatorTok{:}\NormalTok{CD_}\DecValTok{70}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(Especie,CD) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{n_trees=}\KeywordTok{mean}\NormalTok{(n))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 78 x 3
+## # Groups:   Especie [?]
+##    Especie CD    n_trees
+##    <fct>   <chr>   <dbl>
+##  1 021     CD_10   55.4 
+##  2 021     CD_15  121.  
+##  3 021     CD_20  138.  
+##  4 021     CD_25  109.  
+##  5 021     CD_30   63.7 
+##  6 021     CD_35   29.8 
+##  7 021     CD_40   13.2 
+##  8 021     CD_45    6.43
+##  9 021     CD_50    3.00
+## 10 021     CD_55    1.39
+## # ... with 68 more rows
+\end{verbatim}
+
+But \texttt{dplyr} and \texttt{tidyr} also can connect to other packages
+in the \texttt{tidyverse}, such as \texttt{ggplot2} or \texttt{broom},
+so we could expand on the previous code to generate a plot by species.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{species }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(Especie }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"021"}\NormalTok{, }\StringTok{"022"}\NormalTok{,}\StringTok{"023"}\NormalTok{, }\StringTok{"024"}\NormalTok{, }\StringTok{"025"}\NormalTok{, }\StringTok{"026"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{gather}\NormalTok{(CD, n, CD_}\DecValTok{10}\OperatorTok{:}\NormalTok{CD_}\DecValTok{70}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(Especie,CD) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{n_trees=}\KeywordTok{mean}\NormalTok{(n)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{CD, }\DataTypeTok{y=}\NormalTok{n_trees)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_col}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{Especie)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{workshop_exercices_files/figure-latex/ejemplo understanding 2-1.pdf}
+
+\subsection{Functional sequences}\label{functional-sequences}
+
+Another interesting aspect of \texttt{dplyr}is that we can save
+sequences of orders as an object, so they can later be applied to
+different data frames, as if it was a function. To do this, we must use
+the pronoun \texttt{.} as data frame in the sequence of orders to save.
+Let's see an example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{         av_growth <-}\StringTok{  }\NormalTok{. }\OperatorTok{%>%}
+\StringTok{            }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{growth=}\NormalTok{DiamIf3}\OperatorTok{-}\NormalTok{DiamIf2) }\OperatorTok{%>%}
+\StringTok{            }\KeywordTok{group_by}\NormalTok{(Codi) }\OperatorTok{%>%}
+\StringTok{            }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{mean=}\KeywordTok{mean}\NormalTok{(growth), }\DataTypeTok{n=}\KeywordTok{n}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+If we print the object, we will see it has a class
+\texttt{functional\ sequence}, and it specifies the orders to execute:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{av_growth}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Functional sequence with the following components:
+## 
+##  1. mutate(., growth = DiamIf3 - DiamIf2)
+##  2. group_by(., Codi)
+##  3. summarise(., mean = mean(growth), n = n())
+## 
+## Use 'functions' to extract the individual functions.
+\end{verbatim}
+
+We can then apply this sequence to a data frame\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    trees }\OperatorTok{%>%}\StringTok{ }\KeywordTok{av_growth}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 7,713 x 3
+##    Codi    mean     n
+##    <fct>  <dbl> <int>
+##  1 080001  3.33    15
+##  2 080002  3.63    13
+##  3 080003  5.93     7
+##  4 080004  6.55     2
+##  5 080005  2.08    12
+##  6 080006  2.28    23
+##  7 080007  2.45    35
+##  8 080008  1.79    11
+##  9 080009  1.86    16
+## 10 080010  3.33    13
+## # ... with 7,703 more rows
+\end{verbatim}
+
+\ldots{} or combine it with new \texttt{dplyr} or \texttt{tidyr}
+functions
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    trees }\OperatorTok{%>%}
+\StringTok{        }\KeywordTok{filter}\NormalTok{(Provincia}\OperatorTok{==}\StringTok{"17"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{        }\KeywordTok{av_growth}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2,113 x 3
+##    Codi    mean     n
+##    <fct>  <dbl> <int>
+##  1 170004  2.99    39
+##  2 170005  1.86    28
+##  3 170006  1.75    31
+##  4 170007  3.14    29
+##  5 170008  1.68     9
+##  6 170009  1.48    28
+##  7 170010  2.40    26
+##  8 170012  2.11    21
+##  9 170013  1.55    34
+## 10 170014  5.38     8
+## # ... with 2,103 more rows
+\end{verbatim}
+
+\subsection{Databases}\label{databases}
+
+In this workshop we've seen how to work with \texttt{dplyr} and
+\texttt{tidyr} using data stored in our computer, but \texttt{dplyr}also
+allows working woth remote databases, admiting most formats and
+standards: PostgreSQL, MySQL, SQLite, MonetDB, BigQuery, Oracle\ldots{}
+
+When working with databases we will use the same verbs and coding we've
+seen so far, but \texttt{dplyr}transforms the \texttt{R} code into
+\texttt{SQL}sequences, so we don't need to change the language to read
+and analyze the data. Also, it is much faster than \texttt{R}. The
+details of working with databases are beyond the scope of this workshop,
+but you can find more information in the resources listed in the
+following section.
+
+\newpage
+
+\section{More info}\label{more-info}
+
+Both the code and the data needed to generate this document and execute
+the examples can be found in GitHub
+(\url{https://github.com/ameztegui/dplyr_workshop}). You can also find
+more information about these packages and their functions in the book
+\emph{\href{http://r4ds.had.co.nz/}{R for data science}} by Hadley
+Wickham, or in the vignettes for each function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Sobre dplyr}
+\KeywordTok{vignette}\NormalTok{(}\StringTok{"introduction"}\NormalTok{)}
+
+\CommentTok{# Sobre tidyr}
+\KeywordTok{vignette}\NormalTok{(}\StringTok{"tidy-data"}\NormalTok{)}
+
+\CommentTok{# Sobre unir dos tablas mediante join}
+\KeywordTok{vignette}\NormalTok{(}\StringTok{"two-table"}\NormalTok{)}
+
+\CommentTok{# Sobre trabajo con databases}
+\KeywordTok{vignette}\NormalTok{(}\StringTok{"databases"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

@@ -401,7 +401,6 @@ In this case, we first calculate BA per plot, using `summarise`. We then calcula
 \newpage
 
 
-
 \newpage
 
 
