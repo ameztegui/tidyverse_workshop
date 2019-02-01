@@ -45,6 +45,18 @@ layout: true
 <div class="tweaked-header" style="background-image: url(resources/images/tidyverse.png)"></div>
 
 ---
+
+# Who are we?
+
+![](resources/images/survey1.png)
+---
+
+# Who are we?
+
+![](resources/images/survey2.png)
+
+
+---
 background-image: url(resources/images/hadley.png)
 background-position: right bottom
 
@@ -89,11 +101,11 @@ All packages share an underlying design philosophy, grammar, and data structures
 --
 
   - Data in **tidy** format eases the processing and analysis, particularly in
-    vectorized lenguages as R.
+    vectorized languages as R.
     
 ---
 
-# So what's exaclty *in* the tidyverse?
+# So what's exactly *in* the tidyverse?
 
 .pull-extleft[![](resources/images/hex-tidyverse.png)]
 
@@ -101,17 +113,17 @@ All packages share an underlying design philosophy, grammar, and data structures
 
 * `ggplot2` a system for creating graphics, based on the Grammar of Graphics
 
-* `readr` a fast and friendly way to read rectangular data (like csv, tsv, etc.).
+* `readr` a fast and friendly way to read rectangular data (csv, txt...)
 
-* `tibble` a tibble is a modern re-imagining of the data frame, keeping what time has proven to be effective, and throwing out what it has not.
+* `tibble` a tibble is a re-imagining version of the data frame, keeping what time has proven to be effective and throwing out what has not
 
-* `stringr` provides a cohesive set of functions designed to make working with strings as easy as possible. 
+* `stringr` provides a cohesive set of functions designed to make working with strings as easy as possible
 
-* `forcats` provides a suite of useful tools that solve common problems with factors.
+* `forcats` provides a suite of useful tools that solve common problems with factors
 
-* `dplyr` provides a grammar of data manipulation, providing a consistent set of verbs that solve the most common data manipulation challenges.
+* `dplyr` provides a grammar of data manipulation, providing a consistent set of verbs that solve the most common data manipulation challenges
  
-* `tidyr` provides a set of functions that help you get to tidy data.
+* `tidyr` provides a set of functions that help you get to tidy data
  
 * `purrr` enhances R’s functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors
 ]
@@ -144,7 +156,7 @@ All packages share an underlying design philosophy, grammar, and data structures
 ---
 
 
-# our data
+# Our data
 
   1. `plots [11858 x 15]`: all plots from the Third Spanish Forest Inventory (IFN3) in Catalonia  
 
@@ -166,7 +178,7 @@ All packages share an underlying design philosophy, grammar, and data structures
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 load('data/data_workshop.Rdata')
-options(width = 70)
+options(width = 85)
 ```
 
 ```{r tibbles, }
@@ -178,7 +190,7 @@ trees
 # let's have a look at the data
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-options(width = 70)
+options(width = 85)
 ```
 
 ```{r plots, }
@@ -190,7 +202,7 @@ plots
 # let's have a look at the data
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-options(width = 70)
+options(width = 85)
 ```
 
 ```{r species, }
@@ -356,6 +368,14 @@ select(trees, -Codi)
 # Selecting columns (`select`)
 
 ```{r select_ex3}
+select(trees, DiamIf2, DiamIf3)
+```
+
+---
+
+# Selecting columns (`select`)
+
+```{r select_ex4}
 select(trees, Codi:Dist)
 ```
 
@@ -377,7 +397,7 @@ select(trees, Codi:Dist)
 
 # Selecting columns (`select`)
 
-```{r select_ex4}
+```{r select_ex5}
 select(trees, starts_with('Diam'))
 ```
 
@@ -480,8 +500,8 @@ mutate(
 
   4.1 Get growth (in cm) of each tree between IFN2 and IFN3
 
-  4.2 Create two new variables with basal area per hectare of each tree, both for IFN2 and
-      IfN3. Which is the species of the fastest-growing tree in basal area?
+  4.2 Create two new variables with basal area of each tree (in $m^2$ per hectare), both for IFN2 and
+      IFN3. Which is the species of the fastest-growing tree in basal area?
 
 <br>
 
@@ -722,7 +742,7 @@ diam_especie <- filter(
 
 .pull-right[
 
-Functions key
+Pipeline
 
 ```{r ok_right, eval = FALSE}
 diam_especie <- trees %>%
@@ -745,11 +765,12 @@ diam_especie <- trees %>%
 
 Create pipelines to answer the following questions:
 
-  6.1 Which plots have the fastest average growth rate?
+  6.1 Which **plots** have the fastest average growth rate?
   
-  6.2 Which is the plot with the most species?
+  6.2 Which is the plot with the **most species**?
   
-  6.3 Is there any relationship between both variables?
+  6.3 Is there any **relationship** between both variables? <br>
+  *(Optional, some knowledge on `ggplot`is required)*
 
 ---
 layout: true
@@ -779,6 +800,13 @@ output):
 group_by(Especie) %>% summarise(mean = mean(Diam))
 ```
 
+.center[![](resources/images/summary_function.png)]
+
+Sometimes, however, we may be interested in calculating new variables by group, but without
+reducing the dimensions:
+
+.center[![](resources/images/window_function.png)]
+
 ---
 class: code60
 
@@ -787,26 +815,36 @@ class: code60
 Sometimes, however, we may be interested in calculating new variables by group, but without
 reducing the dimensions:
 
-```{r}
+```{r eval = F}
+
 trees %>%
   group_by(Especie) %>%
   mutate(
-    std_diam = DiamIf3 - mean(DiamIf2)
+    std_diam = DiamIf3 - mean(DiamIf3)
   )
 ```
 
-
+```{r echo=F}
+options(width=100)
+trees %>%
+  group_by(Especie) %>%
+  mutate(
+    std_diam = DiamIf3 - mean(DiamIf3)
+  )
+```
 ---
 
 # Grouped `mutate`/`filter`
 
 ## Exercise 7
 
-  7.1 Identify those trees that grow most as compared to the average in that plot
+  7.1 Identify those trees that grow most as compared to the average in that plot <br>
+  .font80[(Hint: calculate growth, *then* mean growth by plot, and *then* the difference)]
   
   7.2 Identify those plots where a species grows much more than the average for the species
-
-Extra (in case you get bored):  
+</br>
+</br>
+**Extra (in case you get bored):**  
 
   7.3 Select IFN plots with pure *Pinus nigra* stands (Especie =
       025). Note: we consider a forest to be monospecific when > 80% in BA corresponds to
@@ -815,33 +853,106 @@ Extra (in case you get bored):
 
 ---
 
-# Joining data (`*_join`)
+# Working with two tables
+
+.middle[##`*_join`]
+
+
+.middle[.center[![](resources/images/join_inner.png)]]
+
+
+---
+
+
+ # Joining data 
+
+ ## Mutating joins
+
+
+
+.pull-left[
+  ![](resources/images/join_left.png)
+  ![](resources/images/join_right.png)
+]
+
+
+.pull-right[
+
+- `left_join(x, y)`: Add observations in y that also appears in x. 
+  Original observations (x) are not lost
+    <br>
+    <br>
+    <br>
+    
+- `right_join(x, y)`: Add observations in x that also appears in y. 
+  Original observations (y) are not lost
+    
+]
+    
+---
+
+
+# Joining data 
 
 ## Mutating joins
 
-  - `left_join(x, y)`: Add observations in y that also appears in x. Original observations
-    (x) are not lost
+
+
+.pull-left[
+  ![](resources/images/join_full.png)
+  ![](resources/images/join_inner.png)
+]
+
+
+.pull-right[
+
+- `full_join(x, y)`: All observations, x and y
+    <br>
+    <br>
+    <br>
+    <br>
   
-  - `right_join(x, y)`: Add observations in x that also appears in y. Original observations
-    (y) are not lost
+- `inner_join(x, y)`: Only observations present in **both** x and y
+
+]
   
-  - `full_join(x, y)`: All observations, x and y
   
-  - `inner_join(x, y)`: Only observastions present in x and y
 
 ---
 
-# Joining data (`*_join`)
+
+# Joining data
+
 
 ## Filtering joins
 
-  - `semi_join(x, y)`: Keep observations in x that are present in y
+
+They work as ‘mutating joins’, but they **affect the observations**
+
+THEY DO NOT ADD COLUMNS! 
+
+.pull-left[
+  ![](resources/images/join_semi.png)
+  ![](resources/images/join_anti.png)
+]
+
+
+.pull-right[
+
+- `semi_join(x, y)`: Keep observations in x that are present in y
+<br>
+<br>
+<br>
+<br>
   
-  - `anti_join(x, y)`: Remove observations in x present in y
+- `anti_join(x, y)`: Remove observations in x present in y
+
+]
 
 ---
 
-# Joining data (`*_join`)
+
+# Joining data
 
 ## Exercise 8
 
@@ -849,6 +960,8 @@ Add X and Y coordinates that are included in the `coordinates` data frame to eac
 the `plots` data frame
 
 ---
+
+
 layout: false
 class: inverse
 background-image: url(resources/images/tidyr.png)
@@ -871,7 +984,7 @@ layout: true
 --
 
   - Data in **tidy** format eases the processing and analysis, particularly in
-    vectorized lenguages as R can be.
+    vectorized languages as R.
 
 ---
 
@@ -995,7 +1108,7 @@ n_parcelas_tidy
 
 ```{r gather_ex3}
 
-n_parcelas_sep <-  separate(n_parcelas_tidy, IFN, c('name', 'ifn_version'), sep = '_')
+n_parcelas_sep <-  separate(n_parcelas_tidy, IFN, c('source', 'version'), sep = '_')
 n_parcelas_sep
 
 ```
@@ -1026,10 +1139,10 @@ species
 
 # tidyr: unite
 
-## `unite(data, col, vars, sep`
+## `unite(data, col, vars, sep)`
 
 ```{r unite_ex}
-n_parcelas_unite <- unite(n_parcelas_sep, IFN, name, ifn_version, sep = '_')
+n_parcelas_unite <- unite(n_parcelas_sep, IFN, source, version, sep = '_')
 n_parcelas_unite
 ```
 

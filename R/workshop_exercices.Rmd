@@ -1,6 +1,6 @@
 ---
 title: "Introduction to the tidyverse: `dplyr`, `tidyr` and `purrr`"
-author: "Aitor Ameztegui, V?ctor Granda"
+author: "Aitor Ameztegui, Víctor Granda"
 date: "February 2019"
 output:
     pdf_document:
@@ -400,48 +400,6 @@ trees %>%
 In this case, we first calculate BA per plot, using `summarise`. We then calculate the sum of BA per plot, but in this case we use `mutate`, because we don't want to aggregate tge data by plot, but calculate them separately for each plot but keeping the rest of the data as it was. Once we have both values, we can filter to select those plots with Pinus nigra, in which percenrage of basal area for that species be > 80%.
 \newpage
 
-# Do
-
-Sometimes, none of the verbes implemented in `dplyr` will do what we want to perform, and we will need to implement different functions, either existent or created by us. This can be done with the `do` function. The `do` function is much slower than the verbs we've seen so far, but it allows to implement any function at all. Since the function we will introduce in `do` does not necessarily understand the pipelines (`%>%`) we will use a pronoun  (`.`) to specify that the function is applied to the group defined previously. So, in the same way that `head` is giving us the first n rows of a data frame
-
-```{r Ejemplo do 1}
-head(trees, 5)
-```
-
-We could use `do` to obtaine the first five lines of *each* plot, or each species:
-
-```{r}
-trees %>%
-    group_by(Codi) %>%
-    do(head(., 5))
-
-```
-
-
-Or we could even use it to adjust a model to each group. In this case, we will apply a linear model to each species, relating height and diameter, but we could use any function created by us:
-
-
-```{r Example do 2}
-
-models <- trees %>%
- group_by(Especie) %>%
- do(mod=lm(HeiIf3 ~DiamIf3, data=.))
-
-models
-
-```
-
-In this case, the output contains a column, named `mod` (the name was defined by us), which is in reality a list. This is a bit weird, but since columns in a data frame can contain any type of data, nothing prevents them of containing lists. Each of the elements of the list conrains the output of the lineal model fit for that specues. If we want to obtain, for example, the coefficients for Pinus sylvestris (Especie =="021"), we just need to type:
-
-```{r Example do3}
-models$mod[models$Especie=="021"]
-```
-
-o bien podr?amos hacer
-
-```{r}
-filter(models, Especie =="021")$mod
-```
 
 
 \newpage
