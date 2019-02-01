@@ -1408,8 +1408,6 @@ verb(data, ...)
 
 # tidyr
 
-## `gather`
-
 
 ```r
 n_parcelas &lt;- tibble(
@@ -1433,17 +1431,36 @@ n_parcelas
 
 ---
 
-# tidyr
+# tidyr: gather
 
-## `gather`
-
-![](resources/images/gather_key.png)
+## `gather(df, key, value, vars)`
 
 
 ```r
-n_parcelas_tidy &lt;- n_parcelas %&gt;%
-  gather(IFN, n, IFN_2, IFN_3)
+n_parcelas_tidy &lt;- gather(n_parcelas,IFN, n, IFN_2, IFN_3)
+```
 
+
+.pull-left[
+
+```r
+n_parcelas
+```
+
+```
+## # A tibble: 4 x 3
+##   Prov      IFN_2 IFN_3
+##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
+## 1 Lleida       16    18
+## 2 Girona       78    79
+## 3 Barcelona    60    67
+## 4 Tarragona    34    36
+```
+]
+
+.pull-right[
+
+```r
 n_parcelas_tidy
 ```
 
@@ -1460,19 +1477,17 @@ n_parcelas_tidy
 ## 7 Barcelona IFN_3    67
 ## 8 Tarragona IFN_3    36
 ```
+]
 
 ---
 
-# tidyr
+# tidyr: separate
 
-## `separate`
+## `separate(df, col, into, sep)`
 
 
 ```r
-n_parcelas_sep &lt;- n_parcelas %&gt;%
-  gather(IFN, n, IFN_2, IFN_3) %&gt;%
-  separate(IFN, c('name', 'ifn_version'), sep = '_')
-
+n_parcelas_sep &lt;-  separate(n_parcelas_tidy, IFN, c('name', 'ifn_version'), sep = '_')
 n_parcelas_sep
 ```
 
@@ -1527,41 +1542,17 @@ where each column is a variable and each row an observation
 .center[![](resources/images/spread.png)]
 .center[![](resources/images/unite.png)]
 
----
-
-# tidyr
-
-## `spread`
-![](resources/images/spread_key.png)
-
-
-
-
-```r
-n_parcelas_tidy %&gt;%
-  spread(IFN, n)
-```
-
-```
-## # A tibble: 4 x 3
-##   Prov      IFN_2 IFN_3
-##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
-## 1 Barcelona    60    67
-## 2 Girona       78    79
-## 3 Lleida       16    18
-## 4 Tarragona    34    36
-```
 
 ---
 
-# tidyr
+# tidyr: unite
 
-## `unite`
+## `unite(data, col, vars, sep`
 
 
 ```r
-n_parcelas_sep %&gt;%
-  unite(IFN, name, ifn_version, sep = '_')
+n_parcelas_unite &lt;- unite(n_parcelas_sep, IFN, name, ifn_version, sep = '_')
+n_parcelas_unite
 ```
 
 ```
@@ -1578,6 +1569,53 @@ n_parcelas_sep %&gt;%
 ## 8 Tarragona IFN_3    36
 ```
 
+
+---
+
+# tidyr: spread
+
+## `spread(df, key, value, sep)`
+
+
+
+```r
+n_parcelas2 &lt;-  spread(n_parcelas_unite, IFN, n)
+```
+
+
+.pull-left[
+
+```r
+n_parcelas
+```
+
+```
+## # A tibble: 4 x 3
+##   Prov      IFN_2 IFN_3
+##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
+## 1 Lleida       16    18
+## 2 Girona       78    79
+## 3 Barcelona    60    67
+## 4 Tarragona    34    36
+```
+]
+
+.pull-right[
+
+```r
+n_parcelas2
+```
+
+```
+## # A tibble: 4 x 3
+##   Prov      IFN_2 IFN_3
+##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
+## 1 Barcelona    60    67
+## 2 Girona       78    79
+## 3 Lleida       16    18
+## 4 Tarragona    34    36
+```
+]
 ---
 
 # `spread` and `unite`

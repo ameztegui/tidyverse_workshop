@@ -951,8 +951,6 @@ verb(data, ...)
 
 # tidyr
 
-## `gather`
-
 ```{r gather_ex}
 n_parcelas <- tibble(
   Prov = c('Lleida', 'Girona', 'Barcelona', 'Tarragona'),
@@ -965,31 +963,41 @@ n_parcelas
 
 ---
 
-# tidyr
+# tidyr: gather
 
-## `gather`
-
-![](resources/images/gather_key.png)
+## `gather(df, key, value, vars)`
 
 ```{r gather_ex2}
-n_parcelas_tidy <- n_parcelas %>%
-  gather(IFN, n, IFN_2, IFN_3)
+n_parcelas_tidy <- gather(n_parcelas,IFN, n, IFN_2, IFN_3)
 
-n_parcelas_tidy
 ```
+
+
+.pull-left[
+```{r}
+n_parcelas
+
+```
+]
+
+.pull-right[
+```{r}
+n_parcelas_tidy
+
+```
+]
 
 ---
 
-# tidyr
+# tidyr: separate
 
-## `separate`
+## `separate(df, col, into, sep)`
 
 ```{r gather_ex3}
-n_parcelas_sep <- n_parcelas %>%
-  gather(IFN, n, IFN_2, IFN_3) %>%
-  separate(IFN, c('name', 'ifn_version'), sep = '_')
 
+n_parcelas_sep <-  separate(n_parcelas_tidy, IFN, c('name', 'ifn_version'), sep = '_')
 n_parcelas_sep
+
 ```
 
 ---
@@ -1013,31 +1021,44 @@ species
 .center[![](resources/images/spread.png)]
 .center[![](resources/images/unite.png)]
 
+
 ---
 
-# tidyr
+# tidyr: unite
 
-## `spread`
-![](resources/images/spread_key.png)
+## `unite(data, col, vars, sep`
 
+```{r unite_ex}
+n_parcelas_unite <- unite(n_parcelas_sep, IFN, name, ifn_version, sep = '_')
+n_parcelas_unite
+```
+
+
+---
+
+# tidyr: spread
+
+## `spread(df, key, value, sep)`
 
 
 ```{r spread_ex}
-n_parcelas_tidy %>%
-  spread(IFN, n)
+n_parcelas2 <-  spread(n_parcelas_unite, IFN, n)
 ```
 
----
 
-# tidyr
+.pull-left[
+```{r}
+n_parcelas
 
-## `unite`
-
-```{r unite_ex}
-n_parcelas_sep %>%
-  unite(IFN, name, ifn_version, sep = '_')
 ```
+]
 
+.pull-right[
+```{r}
+n_parcelas2
+
+```
+]
 ---
 
 # `spread` and `unite`
