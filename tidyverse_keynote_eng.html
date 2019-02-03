@@ -3,7 +3,7 @@
   <head>
     <title>An introduction to the tidyverse</title>
     <meta charset="utf-8">
-    <meta name="author" content="Aitor Ameztegui &amp; VÃ­ctor Granda" />
+    <meta name="author" content="Aitor Ameztegui &amp; Víctor Granda" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="custom.css" type="text/css" />
@@ -24,7 +24,7 @@ class: title-slide
 ### Aitor Ameztegui .blue[@multivac42]  
 .font70[University of Lleida]
 
-### VÃ­ctor Granda .blue[@MalditoBarbudo]  
+### Víctor Granda .blue[@MalditoBarbudo]  
 .font70[Joint Research Unit CTFC-CREAF]
 
 
@@ -117,7 +117,7 @@ All packages share an underlying design philosophy, grammar, and data structures
  
 * `tidyr` provides a set of functions that help you get to tidy data
  
-* `purrr` enhances Râ€™s functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors
+* `purrr` enhances R’s functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors
 ]
 
 ---
@@ -188,7 +188,7 @@ trees
 ##  8 080009 08        045        16  5.09  31.8     20    17.5    15.3    7  
 ##  9 080010 08        243        47 26.9    5.09    65    67.4    66.8   16.5
 ## 10 080013 08        022        44  2.7  127.      15    15.1    12.6    9.5
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 
 ---
@@ -204,19 +204,19 @@ plots
 
 ```
 ## # A tibble: 11,858 x 15
-##    Codi   Provincia Cla   Subclase FccTot FccArb FechaIni   HoraIni            
-##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt; &lt;date&gt;     &lt;dttm&gt;             
-##  1 080001 08        A     1            80     70 2001-07-09 2017-11-26 09:44:00
-##  2 080002 08        A     1            80     70 2001-08-06 2017-11-26 09:18:58
-##  3 080003 08        A     1            90     80 2001-08-06 2017-11-26 12:08:09
-##  4 080004 08        A     1            90     50 2001-07-09 2017-11-26 13:23:23
-##  5 080005 08        A     1            70     60 2001-08-03 2017-11-26 09:11:28
-##  6 080006 08        A     1            90     90 2001-08-01 2017-11-26 13:00:33
-##  7 080007 08        A     1            90     90 2001-08-07 2017-11-26 10:08:15
-##  8 080008 08        A     1            70     60 2001-08-03 2017-11-26 12:12:03
-##  9 080009 08        A     1            80     70 2001-08-02 2017-11-26 09:00:16
-## 10 080010 08        A     1            80     80 2001-06-14 2017-11-26 12:34:21
-## # ... with 11,848 more rows, and 7 more variables: FechaFin &lt;date&gt;, HoraFin &lt;dttm&gt;,
+##    Codi  Provincia Cla   Subclase FccTot FccArb FechaIni   HoraIni            
+##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt; &lt;date&gt;     &lt;dttm&gt;             
+##  1 0800… 08        A     1            80     70 2001-07-09 2017-11-26 09:44:00
+##  2 0800… 08        A     1            80     70 2001-08-06 2017-11-26 09:18:58
+##  3 0800… 08        A     1            90     80 2001-08-06 2017-11-26 12:08:09
+##  4 0800… 08        A     1            90     50 2001-07-09 2017-11-26 13:23:23
+##  5 0800… 08        A     1            70     60 2001-08-03 2017-11-26 09:11:28
+##  6 0800… 08        A     1            90     90 2001-08-01 2017-11-26 13:00:33
+##  7 0800… 08        A     1            90     90 2001-08-07 2017-11-26 10:08:15
+##  8 0800… 08        A     1            70     60 2001-08-03 2017-11-26 12:12:03
+##  9 0800… 08        A     1            80     70 2001-08-02 2017-11-26 09:00:16
+## 10 0800… 08        A     1            80     80 2001-06-14 2017-11-26 12:34:21
+## # … with 11,848 more rows, and 7 more variables: FechaFin &lt;date&gt;, HoraFin &lt;dttm&gt;,
 ## #   Rocosid &lt;int&gt;, Textura &lt;int&gt;, MatOrg &lt;int&gt;, PhSuelo &lt;int&gt;, FechaPh &lt;date&gt;
 ```
 
@@ -246,7 +246,7 @@ species
 ##  8 080005 071         0   0     0    14.1  5.09  31.8  0      0    0        0  31.8
 ##  9 080005 243         0   0    14.1   0   14.1    0    5.09   0    0        0   0  
 ## 10 080005 278         0 286.   31.8   0    0     31.8  0      0    0        0   0  
-## # ... with 14,768 more rows, and 2 more variables: CD_65 &lt;dbl&gt;, CD_70 &lt;dbl&gt;
+## # … with 14,768 more rows, and 2 more variables: CD_65 &lt;dbl&gt;, CD_70 &lt;dbl&gt;
 ```
 
 
@@ -284,16 +284,16 @@ glimpse(trees)
 ```
 ## Observations: 111,756
 ## Variables: 10
-## $ Codi      &lt;fct&gt; 080001, 080002, 080003, 080004, 080006, 080007, 080008, 080009...
-## $ Provincia &lt;chr&gt; "08", "08", "08", "08", "08", "08", "08", "08", "08", "08", "0...
-## $ Especie   &lt;fct&gt; 022, 476, 021, 021, 021, 021, 243, 045, 243, 022, 021, 021, 07...
-## $ Rumbo     &lt;dbl&gt; 7, 38, 25, 28, 19, 32, 40, 16, 47, 44, 13, 9, 9, 25, 199, 6, 4...
-## $ Dist      &lt;dbl&gt; 8.30, 9.10, 7.00, 8.89, 11.19, 12.00, 7.80, 5.09, 26.89, 2.70,...
-## $ N         &lt;dbl&gt; 31.83, 31.83, 31.83, 31.83, 14.14, 14.14, 31.83, 31.83, 5.09, ...
-## $ CD        &lt;dbl&gt; 20, 35, 25, 15, 35, 35, 15, 20, 65, 15, 20, 30, 45, 20, 35, 30...
-## $ DiamIf3   &lt;dbl&gt; 20.30, 34.00, 24.80, 16.85, 34.05, 33.10, 15.00, 17.50, 67.40,...
-## $ DiamIf2   &lt;dbl&gt; 18.90, 32.45, 17.55, 12.65, 30.90, 28.15, 13.25, 15.30, 66.80,...
-## $ HeiIf3    &lt;dbl&gt; 9.00, 9.00, 11.00, 9.50, 13.00, 10.00, 6.00, 7.00, 16.50, 9.50...
+## $ Codi      &lt;fct&gt; 080001, 080002, 080003, 080004, 080006, 080007, 080008, 080009, …
+## $ Provincia &lt;chr&gt; "08", "08", "08", "08", "08", "08", "08", "08", "08", "08", "08"…
+## $ Especie   &lt;fct&gt; 022, 476, 021, 021, 021, 021, 243, 045, 243, 022, 021, 021, 071,…
+## $ Rumbo     &lt;dbl&gt; 7, 38, 25, 28, 19, 32, 40, 16, 47, 44, 13, 9, 9, 25, 199, 6, 43,…
+## $ Dist      &lt;dbl&gt; 8.30, 9.10, 7.00, 8.89, 11.19, 12.00, 7.80, 5.09, 26.89, 2.70, 8…
+## $ N         &lt;dbl&gt; 31.83, 31.83, 31.83, 31.83, 14.14, 14.14, 31.83, 31.83, 5.09, 12…
+## $ CD        &lt;dbl&gt; 20, 35, 25, 15, 35, 35, 15, 20, 65, 15, 20, 30, 45, 20, 35, 30, …
+## $ DiamIf3   &lt;dbl&gt; 20.30, 34.00, 24.80, 16.85, 34.05, 33.10, 15.00, 17.50, 67.40, 1…
+## $ DiamIf2   &lt;dbl&gt; 18.90, 32.45, 17.55, 12.65, 30.90, 28.15, 13.25, 15.30, 66.80, 1…
+## $ HeiIf3    &lt;dbl&gt; 9.00, 9.00, 11.00, 9.50, 13.00, 10.00, 6.00, 7.00, 16.50, 9.50, …
 ```
 
 ---
@@ -370,7 +370,7 @@ filter(trees, Dist &lt; 3)
 ##  8 080188 08        243        24  2.7   127.    10    12.2    10.8   6.4 
 ##  9 080197 08        243       103  2.79  127.    10    10.7     8.2   6.59
 ## 10 080198 08        021         2  2     127.    25    26.5    25.1  11.2 
-## # ... with 11,591 more rows
+## # … with 11,591 more rows
 ```
 
 
@@ -397,7 +397,7 @@ filter(trees, Provincia == '25')
 ##  8 250011 25        031        51 21.5    5.09    55    55.0    48.2  26.2 
 ##  9 250012 25        071         4 13.5   14.1     50    52.4    50.8  16.8 
 ## 10 250013 25        073        40 10.3   14.1     20    22.4    15.8  11   
-## # ... with 35,655 more rows
+## # … with 35,655 more rows
 ```
 
 ---
@@ -423,7 +423,7 @@ filter(trees, CD %in% c(45, 70))
 ##  8 081354 08        026        16  8.6  31.8     45    43.4    30.8   16.9
 ##  9 081402 08        054        51  5.19 31.8     70   102.     95.5   17.7
 ## 10 081943 08        024         1 10.3  14.1     45    43.2    33.8   11.7
-## # ... with 2,542 more rows
+## # … with 2,542 more rows
 ```
 
 ---
@@ -477,7 +477,7 @@ trees
 ##  8 080009 08        045        16  5.09  31.8     20    17.5    15.3    7  
 ##  9 080010 08        243        47 26.9    5.09    65    67.4    66.8   16.5
 ## 10 080013 08        022        44  2.7  127.      15    15.1    12.6    9.5
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 
 ---
@@ -503,7 +503,7 @@ select(trees, DiamIf3)
 ##  8    17.5
 ##  9    67.4
 ## 10    15.1
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 
 ---
@@ -529,7 +529,7 @@ select(trees, -Codi)
 ##  8 08        045        16  5.09  31.8     20    17.5    15.3    7  
 ##  9 08        243        47 26.9    5.09    65    67.4    66.8   16.5
 ## 10 08        022        44  2.7  127.      15    15.1    12.6    9.5
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 
 ---
@@ -555,7 +555,7 @@ select(trees, DiamIf2, DiamIf3)
 ##  8    15.3    17.5
 ##  9    66.8    67.4
 ## 10    12.6    15.1
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 
 ---
@@ -581,7 +581,7 @@ select(trees, Codi:Dist)
 ##  8 080009 08        045        16  5.09
 ##  9 080010 08        243        47 26.9 
 ## 10 080013 08        022        44  2.7 
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 
 ---
@@ -621,7 +621,7 @@ select(trees, starts_with('Diam'))
 ##  8    17.5    15.3
 ##  9    67.4    66.8
 ## 10    15.1    12.6
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 
 ---
@@ -663,7 +663,7 @@ arrange(trees, Dist)
 ##  8 171941 17        079       150   0.4  127.    20    20.0    10.6   20  
 ##  9 171990 17        045        34   0.4  127.    25    23.2    19.6    8  
 ## 10 172056 17        045       160   0.4  127.    15    12.7    11.3    8  
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 
 
@@ -690,7 +690,7 @@ arrange(trees, desc(Dist))
 ##  8 250039 25        031       119  32.5  5.09    65    63.5    62.6   30  
 ##  9 250025 25        031       390  32.1  5.09    45    45.6    43.8   24.6
 ## 10 171289 17        071        38  31.4  5.09    60    60.8    50.4   26.9
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 
 ---
@@ -738,7 +738,7 @@ mutate(
 ##  8 080009 08        045        16  509   31.8     20    17.5    15.3    7  
 ##  9 080010 08        243        47 2689    5.09    65    67.4    66.8   16.5
 ## 10 080013 08        022        44  270  127.      15    15.1    12.6    9.5
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 
 
@@ -769,7 +769,7 @@ mutate(
 ##  8 0800… 08        045        16  5.09  31.8     20    17.5    15.3    7        2.5 
 ##  9 0800… 08        243        47 26.9    5.09    65    67.4    66.8   16.5      4.08
 ## 10 0800… 08        022        44  2.7  127.      15    15.1    12.6    9.5      1.59
-## # ... with 111,746 more rows, and 1 more variable: Alometria2 &lt;dbl&gt;
+## # … with 111,746 more rows, and 1 more variable: Alometria2 &lt;dbl&gt;
 ```
 
 ---
@@ -802,7 +802,7 @@ mutate(
 ##  8 080009 08        Other               16  5.09  31.8     20    17.5    15.3    7  
 ##  9 080010 08        Other               47 26.9    5.09    65    67.4    66.8   16.5
 ## 10 080013 08        Other               44  2.7  127.      15    15.1    12.6    9.5
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 
 ---
@@ -820,7 +820,7 @@ mutate(
 
 .center[Clue:]
 $$
-AB = \frac{\pi}{4} Â· Diam^{2} Â· N
+AB = \frac{\pi}{4} · Diam^{2} · N
 $$
 
 ---
@@ -898,7 +898,7 @@ by_province
 ##  8 080009 08        045        16  5.09  31.8     20    17.5    15.3    7  
 ##  9 080010 08        243        47 26.9    5.09    65    67.4    66.8   16.5
 ## 10 080013 08        022        44  2.7  127.      15    15.1    12.6    9.5
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 
 ---
@@ -1003,7 +1003,7 @@ mutate_if(trees, is.numeric, log)
 ##  8 080009 08        045      2.77 1.63   3.46  3.00    2.86    2.73   1.95
 ##  9 080010 08        243      3.85 3.29   1.63  4.17    4.21    4.20   2.80
 ## 10 080013 08        022      3.78 0.993  4.85  2.71    2.71    2.53   2.25
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 ]
 
@@ -1034,7 +1034,7 @@ mutate_at(
 ##  8 080009 08        sp_045     16  5.09  31.8     20    17.5    15.3    7  
 ##  9 080010 08        sp_243     47 26.9    5.09    65    67.4    66.8   16.5
 ## 10 080013 08        sp_022     44  2.7  127.      15    15.1    12.6    9.5
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 ]
 
@@ -1251,7 +1251,7 @@ trees %&gt;%
 ##  8 080009 08        045        16  5.09  31.8     20    17.5    15.3    7      1.40 
 ##  9 080010 08        243        47 26.9    5.09    65    67.4    66.8   16.5   46.5  
 ## 10 080013 08        022        44  2.7  127.      15    15.1    12.6    9.5  -11.9  
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 ---
 
@@ -1348,7 +1348,7 @@ trees %&gt;%
 ## Filtering joins
 
 
-They work as â€˜mutating joinsâ€™, but they **affect the observations**
+They work as ‘mutating joins’, but they **affect the observations**
 
 THEY DO NOT ADD COLUMNS! 
 
@@ -1428,8 +1428,8 @@ Data is not always organized...
 ##  8 AD     1997    NA    NA     0     0     1     2     2     1     6    NA    NA    NA     0     1
 ##  9 AD     1998    NA    NA     0     0     0     1     0     0     0    NA    NA    NA    NA    NA
 ## 10 AD     1999    NA    NA     0     0     0     1     1     0     0    NA    NA    NA     0     0
-## # ... with 5,759 more rows, and 6 more variables: f2534 &lt;int&gt;, f3544 &lt;int&gt;, f4554 &lt;int&gt;,
-## #   f5564 &lt;int&gt;, f65 &lt;int&gt;, fu &lt;int&gt;
+## # … with 5,759 more rows, and 6 more variables: f2534 &lt;int&gt;, f3544 &lt;int&gt;, f4554 &lt;int&gt;, f5564 &lt;int&gt;,
+## #   f65 &lt;int&gt;, fu &lt;int&gt;
 ```
 
 ---
@@ -1453,7 +1453,7 @@ that's better!!
 ##  8 AD     1996 m     014           0
 ##  9 AD     1996 m     1524          0
 ## 10 AD     1996 m     2534          0
-## # ... with 35,740 more rows
+## # … with 35,740 more rows
 ```
 
 
@@ -1482,7 +1482,7 @@ species
 ##  8 080005 071         0   0     0    14.1  5.09  31.8  0      0    0        0  31.8     0     0
 ##  9 080005 243         0   0    14.1   0   14.1    0    5.09   0    0        0   0       0     0
 ## 10 080005 278         0 286.   31.8   0    0     31.8  0      0    0        0   0       0     0
-## # ... with 14,768 more rows
+## # … with 14,768 more rows
 ```
 
 
@@ -1646,7 +1646,7 @@ where each column is a variable and each row an observation
 ##  8 080005 071         0   0     0    14.1  5.09  31.8  0      0    0        0  31.8     0     0
 ##  9 080005 243         0   0    14.1   0   14.1    0    5.09   0    0        0   0       0     0
 ## 10 080005 278         0 286.   31.8   0    0     31.8  0      0    0        0   0       0     0
-## # ... with 14,768 more rows
+## # … with 14,768 more rows
 ```
 
 ---
@@ -1853,15 +1853,17 @@ trees %&gt;%
 ```
 
 ```
-##          term  estimate   std.error statistic p.value
-## 1 (Intercept) 5.0440093 0.046359811 108.80134       0
-## 2     DiamIf3 0.2754189 0.001917213 143.65588       0
-## 3 (Intercept) 4.7398904 0.052552661  90.19316       0
-## 4     DiamIf3 0.2896370 0.002110413 137.24189       0
-## 5 (Intercept) 5.5570947 0.040415357 137.49958       0
-## 6     DiamIf3 0.2343659 0.001467420 159.71291       0
-## 7 (Intercept) 3.7542965 0.061363682  61.18108       0
-## 8     DiamIf3 0.2379400 0.002468751  96.38074       0
+## # A tibble: 8 x 5
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)    5.04    0.0464      109.        0
+## 2 DiamIf3        0.275   0.00192     144.        0
+## 3 (Intercept)    4.74    0.0526       90.2       0
+## 4 DiamIf3        0.290   0.00211     137.        0
+## 5 (Intercept)    5.56    0.0404      137.        0
+## 6 DiamIf3        0.234   0.00147     160.        0
+## 7 (Intercept)    3.75    0.0614       61.2       0
+## 8 DiamIf3        0.238   0.00247      96.4       0
 ```
 
 ---
@@ -1892,7 +1894,7 @@ list.files('data', '.csv', full.names = TRUE) %&gt;%
 ```
 ## # A tibble: 111,756 x 12
 ##    Codi   Provincia Cla   Subclase Especie Rumbo  Dist    Fac    CD DiamIf3 DiamIf2 HeiIf3
-##    &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+##    &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
 ##  1 080001 08        A     1        022         7  8.3   31.8     20    20.3    18.9    9  
 ##  2 080002 08        A     1        476        38  9.1   31.8     35    34      32.4    9  
 ##  3 080003 08        A     1        021        25  7     31.8     25    24.8    17.6   11  
@@ -1903,7 +1905,7 @@ list.files('data', '.csv', full.names = TRUE) %&gt;%
 ##  8 080009 08        A     1        045        16  5.09  31.8     20    17.5    15.3    7  
 ##  9 080010 08        A     1        243        47 26.9    5.09    65    67.4    66.8   16.5
 ## 10 080013 08        A     1        022        44  2.7  127.      15    15.1    12.6    9.5
-## # ... with 111,746 more rows
+## # … with 111,746 more rows
 ```
 
 ---
