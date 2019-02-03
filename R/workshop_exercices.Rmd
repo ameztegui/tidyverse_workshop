@@ -1,5 +1,5 @@
 ---
-title: "Introduction to the tidyverse: `dplyr`, `tidyr` and `purrr`"
+title: "An introduction to the tidyverse: `dplyr`, `tidyr` and `purrr`"
 author: "Aitor Ameztegui, Víctor Granda"
 date: "February 2019"
 output:
@@ -13,30 +13,23 @@ output:
 
 # Introduction
 
-Thi is a `RMarkdown` document generated to illustrate the exercices suggested as part of the Workshop "Introduction to the tidyverse", that will be celebrated in Barcelona within the 1st Meeting of the Iberian Ecological Society and the XIV AEET Meeting. All the code and the data needed to produce this document can be found in GitHub ([https://github.com/ameztegui/dplyr_workshop](https://github.com/ameztegui/dplyr_workshop)). For any doubt about the exercises, you can contact Aitor Ameztegui ([ameztegui@gmail.com](ameztegui@gmail.com)) or V?ctor Granda  ([ameztegui@gmail.com](ameztegui@gmail.com)).
+Thi is a `RMarkdown` document generated to illustrate the exercices suggested as part of the Workshop "An introduction to the tidyverse", that will be celebrated in Barcelona within the 1st Meeting of the Iberian Ecological Society and the XIV AEET Meeting. All the code and the data needed to produce this document can be found in GitHub ([https://github.com/ameztegui/tidyverse_workshop](https://github.com/ameztegui/tidyverse_workshop)). For any doubt about the exercises, you can contact Aitor Ameztegui ([ameztegui@gmail.com](ameztegui@gmail.com)) or Victor Granda  ([v.granda@creaf.uab.cat](v.granda@creaf.uab.cat)).
 
-The packages` tidyr`, `dplyr`, and `purrr` are part of a set of packages known as the  [`tidyverse`](https://cran.r-project.org/web/packages/tidyverse/index.html), created by [Hadley Wickham](https://github.com/hadley), Chief Scientist in RStudio. The `tidyverse` was created to easen data analysis and data management. It consists on packages to import and read data, to organize and modify them, to analyze and model them and to visualize them. In this seminar we will focus on `tidyr`, conceived to help organize data, and `dplyr`, that focuses on data transformation. We must firs install these packages (if we haven't done it yet). To install all the packages from the `tidyverse` at once we  need to write  ```install.packages("tidyverse")```. Then we need to load the packages by typing:
+The packages` tidyr`, `dplyr`, and `purrr` are part of a set of packages known as the  [`tidyverse`](https://cran.r-project.org/web/packages/tidyverse/index.html), created by [Hadley Wickham](https://github.com/hadley), Chief Scientist in RStudio. The `tidyverse` was created to easen data analysis and data management. It consists on packages to import and read data, to organize and modify them, to analyze and model them, and to visualize them. In this seminar we will focus on `tidyr`, conceived to help organize data, `dplyr`, that focuses on data transformation, and `purrr`, which enhances R’s functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors. We must firs install these packages (if we haven't done it yet). To install all the packages from the `tidyverse` at once we  need to write  ```install.packages("tidyverse")```. Then we need to load the core tidyverse and make it available in our current R session.
 
 ```{r, results="hide", message=F, warning=FALSE,}
 library(tidyverse)
 ```
 
-We also need to load the dataset we will use for this workshop, we can download them from  [GitHub](https://github.com/ameztegui/dplyr_workshop).
+We also need to load the dataset we will use for this workshop, we can download them from  [GitHub](https://github.com/ameztegui/tidyverse_workshop/data).
 
 ```{r introduccion, message=F, warning=FALSE, results="hide"}
 
 load("../data/data_workshop.Rdata")
 
-trees <- tbl_df(trees)
-plots <- tbl_df(plots)
-species <- tbl_df(species)
-coordinates <- tbl_df(coordinates)
-
 ```
 
-Through the function `tbl_df` we will convert normal data frames into *tibbles*. A *tibble* is just a data frame with some particularities: for example, they only print the first 10 rows by default (instead of the whole data frame), and printing them provides information on all the variables and their class. Besides that, we can treat tibbles as normal data frames, because they behave like them at all effects. 
-
-In these exercises we will use four data frames with information from the 2nd and 3rd Spanish National Forest Inventory (IFN2 e IFN3) in Catalonia. The data frames are:
+In these exercises we will use five data frames with information from the 2nd and 3rd Spanish National Forest Inventory (IFN2 e IFN3) in Catalonia. The data frames are:
 
 * **plots** [11,858 x 15]: all the IFN3 plots in Catalonia, with info about the date and time of measurement, soil texture and soil pH, total canopy cover and tree canopy cover, etc.
 
@@ -46,15 +39,28 @@ In these exercises we will use four data frames with information from the 2nd an
 
 * **coordinates** [11,858 x 6]: contains the X & Y coordinates of each IFN3 plot.
 
-First thing to do is to have a look at the data, to get familiar with the data they contain. We will use the function `glimpse` for that.
+* **leaf** [10447 x 3]: leaf biomass and carbon content for those IFN3 plots where it is  available
 
-```{r see.data, eval=FALSE}
-glimpse(plots)
-glimpse(trees)
-glimpse(species)
-glimpse(coordinates)
+First thing to do is to have a look at the data, to get familiar with the data they contain. 
+
+```{r see.data}
+plots
+trees
 
 ```
+
+Maybe you have noticed that printing the data frames produces a different output. Instead of plotting all the content, it prints by default the first 10 rows, and it will also give us some information about the variable types. This is because they are not *normal* data frames, but tibbles.We can check this by printing its class type.
+```{r tibble_class}
+class(plots)
+```
+
+A *tibble* is just a data frame with some particularities: for example, they only print the first 10 rows by default (instead of the whole data frame), and printing them provides information on all the variables and their class. Besides that, we can treat tibbles as normal data frames, because they behave like them at all effects. Since they are tibbles, we can use the function `glimpse` to have a prettier summary of its content.
+
+```{r glimpse.data}
+glimpse(plots)
+
+```
+
 
 \newpage
 
@@ -63,11 +69,11 @@ glimpse(coordinates)
 
 # `dplyr`: transforming data frames
 
-`dplyr` can be used to transform our data frames in the way we need it in each case: we can create bew variables, select those of interest, execute filters, etc. The `dplyr` package contains 5 main verbs:
+`dplyr` can be used to transform our data frames in the way we need it in each case: we can create new variables, select those of interest, execute filters, etc. The `dplyr` package contains 5 main verbs:
 
-* `filter` selects rows based on a given set of conditions
+* `filter` keep the rows that match a given set of conditions
 
-* `select` select columns based on their name
+* `select` keep columns based on their name
 
 * `arrange` sort the data frame based on one or several variables
 
@@ -85,7 +91,9 @@ All of them have a similar structure: the first argument in the function is the 
 
 To practice with `filter` let's try to find those plots of IFN that: 
 
-* 1.1 Are located in Barcelona (08) or Girona (17). We have two options:
+* 1.1 Are located in Barcelona (08) or Girona (17). 
+
+We have two options:
 
 
 
