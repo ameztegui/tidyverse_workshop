@@ -562,6 +562,38 @@ Now we will transform the data frame, specifying the variable that will produce 
 spread(species_unite, CD,n)
 ```
 
+# `purrr` fuctional programming
+
+`purrr` allows for functional programming in R, meaning that functions becomes
+"first citizens`in the R environment (they can be used as arguments or returned
+from other functions).
+
+## Making loops pipe friendly
+
+You can think of `map`, the main verb of `purrr`, as a *pipe-friendly* version
+of the apply family. It will accept functions as arguments and they will be
+applied to all elements of the list/vector provided.
+
+### Exercise 11
+
+First thing is grouping by the plot code (`Codi`), but also, and this is important,
+by `Province` as we will need it later. Then we summarise the height with the mean,
+join the leaf dataset, split by province an map the lineal model. Optionally,
+we can use broom or summary to see the results:
+
+```{r, eval=FALSE}
+trees %>%
+  group_by(Codi, Provincia) %>%
+  summarise(height = mean(HeiIf3, na.rm = TRUE)) %>%
+  left_join(leaf, by = 'Codi') %>%
+  split(.$Provincia) %>%
+  map(~ lm(height ~ leaf_biomass, data = .)) %>%
+  map_dfr(broom::tidy)
+```
+
+
+
+
 # Other interesting functionalities of the tidyverse
 
 ## Communication between packages
