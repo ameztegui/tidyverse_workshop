@@ -1,28 +1,29 @@
-#Introduction to the tidyverse
-Este repositorio contiene el codigo, ejemplos y ejercicios utilizados durante el seminario de dplyr y tidyr que tuvo lugar en Solsona, el 24 de enero de 2017. El texto para seguir el workshop se puede encontrar [aquí](R/workshop_exercices.html), y se puede descargar también como un [pdf](R/workshop_exercices.pdf)
+# Introduction to the tidyverse: dplyr, tidyr and purrr
 
-## Contenido
-El workshop cubre las principales funciones de los paquetes [dplyr](dplyr.tidyverse.org) y [tidyr](tidyr.tidyverse.org), ambos incluídos en el `tidyverse`, desarrollado por Hadley Wickham. Dichas funciones incluyen verbos como `mutate`, `summarise`, `select` o `filter`, así como la transformación de los datos de acuerdo al principio del `tidy data`, usando verbos como `gather`y `spread`. Finalment, tambié cubre las distintas opciones de unión de dos tablas mediante `join`, e introduce algunas otras funciones más avanzadas de los paquetes `dplyr`,`tidyr`y `purrr`. Para más información sobre dichos paquetes y sus funciones, se recomienda consultar [R for data science](http://r4ds.had.co.nz/), de Hadley Wickham, o la página web del `tidyverse`.
+This repo contains the slides, code, examples, and exercices used during the workshop that took place in Barcelona, the 4th February 2019, within the SIBECOL conference. The slides used during the course can be found [here](index.html), and the document with the exercises can be found [here](R/workshop_exercices.html).
 
-## Dependencias
-Para poder seguir el seminario es necesario tener instalados los paquetes `tidyr`y `dplyr` así como el paquete `maps`. Si no los tenemos podemos hacerlo mediante la siguiente instrucción
+## Content
+In the last few years, the `tidyverse` has changed the way in which many scientist do data science. The tidyverse is a collection of R packages specifically designed for data science. All packages share an underlying design philosophy, grammar, and data structures, which has turned them into a kind of "own ecosystem" that some researchers have not dared to enter into. This workshop aims to overcome these fears by presenting some of the most widely used packages in the tidyverse: dplyr, tidyr and purrr. [tidyr](tidyr.tidyverse.org) has been specifically designed to organize and format data in a way that makes it easier to work with. [dplyr](dplyr.tidyverse.org) is designed to make the main data manipulation operations easier. Together, they facilitate data wrangling and enable the researcher to focus on the problems he or she wants to solve, not on how to solve them. [purrr](purrr.tidyverse.org), on the other hand, facilitates repetitive tasks and loops in tidy data by providing a complete and consistent set of tools for working with functions and vectors. 
+
+
+## Dependencies
+To follow the workshop you need to have the `tidyverse` package installed in your computer. Alternatively, you can also install the three components of the tidyverse that we will actually use during the workshop: `tidyr`. `dplyr`, and `purrr`. If you haven't installed them yet, you can do it by typing in your `R` console:
 
 ```
 install.packages("tidyr")
 install.packages("dplyr")
-install.packages("maps")
+install.packages("purrr")
 ```
 
-## Licencia
-Los datos necesarios para seguir el seminario (disponibles [aquí](https://github.com/ameztegui/dplyr_workshop/tree/master/data)) se descargaron del Tercer Inventario Forestal Nacional español (3IFN). Todos los datos, código y documentos asociados están bajo una licencia MIT, lo cual permite cualquier uso, distribución o modificación, siempre que se mencione la autoría. Los detalles pueden consultarse en el archivo [LICENSE.txt](LICENSE.txt). 
+## Licence
+The data needed to follow the workshop has been obtained from the 2nd and 3rd editions of the Spanish National Forest Inventory (Ministerio de Medio Ambiente, 2005), and can be found [here](https://github.com/ameztegui/tidyverse_workshop/tree/master/data)). All data, code and any associated documents are published under a MIT license, which allows any use, distribution or modification, provided authorship is acknowledged. Details can be found in the file [LICENSE.txt](LICENSE.txt). 
 
-## Atribución y contacto
-Si utilizas o modificas el material contenido en este repositorio, cítalo adecuadamente como:
+## Attribution and contact
+If you use or modify the material in this repository, please cite it adequately as:
 
 ```
 Ameztegui, A; Granda, V. (2019) Introduction to the tidyverse: dplyr, tidyr and purrr . 
 GitHub repository, https://github.com/ameztegui/tidyverse_workshop
 ```
-Puedes encontrar más detalles en el archivo [CITATION.txt](CITATION.txt)
-Para cualquier uso que trascienda dicha licencia o cualquier aclaración, contactar con Aitor Ameztegui (ameztegui@gmail.com).
+You can find more details in the file [CITATION.txt](CITATION.txt). For any use that goes beyond that license or for any doubt, please contact Aitor Ameztegui (ameztegui@gmail.com).
 
