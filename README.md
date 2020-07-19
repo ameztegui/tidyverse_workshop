@@ -23,7 +23,7 @@ If you use or modify the material in this repository, please cite it adequately 
 
 ```
 Ameztegui, A; Granda, V. (2019) Introduction to the tidyverse: dplyr, tidyr and purrr . 
-GitHub repository, https://github.com/ameztegui/tidyverse_workshop
+Workshop. Sibecol Conference, Barcelona. [DOI: 10.5281/zenodo.3951354](https://doi.org/10.5281/zenodo.3951354)
 ```
 You can find more details in the file [CITATION.txt](CITATION.txt). For any use that goes beyond that license or for any doubt, please contact Aitor Ameztegui (ameztegui@gmail.com).
 
