@@ -1,5 +1,7 @@
 # Introduction to the tidyverse: dplyr, tidyr and purrr
 
+[![DOI](https://zenodo.org/badge/164469568.svg)](https://zenodo.org/badge/latestdoi/164469568)
+
 This repo contains the slides, code, examples, and exercices used during the workshop that took place in Barcelona, the 4th February 2019, within the SIBECOL conference. The slides used during the course can be found [here](https://sibecol-tidyverse-workshop.netlify.com), and the document with the exercises can be found [here](./R/workshop_exercices.pdf).
 
 ## Content
