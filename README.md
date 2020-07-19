@@ -23,9 +23,9 @@ The data needed to follow the workshop has been obtained from the 2nd and 3rd ed
 ## Attribution and contact
 If you use or modify the material in this repository, please cite it adequately as:
 
-```
+
 Ameztegui, A; Granda, V. (2019) Introduction to the tidyverse: dplyr, tidyr and purrr . 
 Workshop. Sibecol Conference, Barcelona. [DOI: 10.5281/zenodo.3951354](https://doi.org/10.5281/zenodo.3951354)
-```
+
 You can find more details in the file [CITATION.txt](CITATION.txt). For any use that goes beyond that license or for any doubt, please contact Aitor Ameztegui (ameztegui@gmail.com).
 
