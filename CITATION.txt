@@ -1,14 +1,16 @@
 To reference this workshop in publications, please cite the following:
-ç
-Ameztegui, A; Granda, V. (2019) Introduction to the tidyverse: dplyr, tidyr and purrr . 
-Workshop. Sibecol Conference, Barcelona. [DOI: 10.5281/zenodo.3951354](https://doi.org/10.5281/zenodo.3951354)
 
-@misc{Ameztegui2019,
-  author = {Ameztegui, A.; Granda, V.},
-  title = {Introduction to the tidyverse},
-  year = {2019},
-  publisher = {Sibecol Conference},
-  journal = {Workshop},
-  doi = {10.5281/zenodo.3951354}
-  howpublished = {\url{https://github.com/ameztegui/SIBECOL_workshop}}
+Aitor Ameztegui, & Víctor Granda. (2020). tidyverse_workshop (Version 1.0). Zenodo. http://doi.org/10.5281/zenodo.3951354
+
+@misc{aitor_ameztegui_2020_3951354,
+  author       = {Aitor Ameztegui and
+                  Víctor Granda},
+  title        = {tidyverse\_workshop},
+  month        = jul,
+  year         = 2020,
+  publisher    = {Zenodo},
+  version      = {1.0},
+  doi          = {10.5281/zenodo.3951354},
+  url          = {https://doi.org/10.5281/zenodo.3951354}
 }
+
