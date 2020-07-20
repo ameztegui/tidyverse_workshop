@@ -1,13 +1,13 @@
 To reference this workshop in publications, please cite the following:
 
-Aitor Ameztegui, & Víctor Granda. (2020). tidyverse_workshop (Version 1.0). Zenodo. http://doi.org/10.5281/zenodo.3951354
+Aitor Ameztegui, & Víctor Granda. (2019). Introduction to data science with the tidyverse (Version 1.0). Zenodo. http://doi.org/10.5281/zenodo.3951354
 
-@misc{aitor_ameztegui_2020_3951354,
+@misc{aitor_ameztegui_2019_3951354,
   author       = {Aitor Ameztegui and
                   Víctor Granda},
-  title        = {tidyverse\_workshop},
-  month        = jul,
-  year         = 2020,
+  title        = {Introduction to data science with the tidyverse},
+  month        = feb,
+  year         = 2019,
   publisher    = {Zenodo},
   version      = {1.0},
   doi          = {10.5281/zenodo.3951354},
